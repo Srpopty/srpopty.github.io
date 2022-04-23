@@ -59,7 +59,15 @@
     isPost : true
   };
 </script>
-
+<script>
+    function urldecode(str, charset = 'utf-8') {
+        var script = document.createElement('script');
+        script.id = '_urlDecodeFn_';
+        script.src = 'data:text/javascript;charset=' + charset + ',window._urldecoded = "' + str + '";document.getElementById("_urlDecodeFn_").parentNode.removeChild(document.getElementById("_urlDecodeFn_"));';
+        document.body.appendChild(script);
+        return window._urldecoded;
+    }
+</script>
   <title>Seccon2018 GhostKingdom Writeup | Shadow Gallery</title>
   
 
@@ -478,7 +486,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       owner       : 'Srpopty',
       admin       : ['Srpopty'],
       id          : '0659a5c2a1532a443d808ceb018ff141',
-        language: 'en',
+        language: 'zh-CN',
       distractionFreeMode: true
     });
     gitalk.render('gitalk-container');

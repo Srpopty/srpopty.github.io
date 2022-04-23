@@ -48,7 +48,15 @@
     isPost : true
   };
 </script>
-
+<script>
+    function urldecode(str, charset = 'utf-8') {
+        var script = document.createElement('script');
+        script.id = '_urlDecodeFn_';
+        script.src = 'data:text/javascript;charset=' + charset + ',window._urldecoded = "' + str + '";document.getElementById("_urlDecodeFn_").parentNode.removeChild(document.getElementById("_urlDecodeFn_"));';
+        document.body.appendChild(script);
+        return window._urldecoded;
+    }
+</script>
   <title>SSRF CheatSheet | Shadow Gallery</title>
   
 
@@ -634,7 +642,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       owner       : 'Srpopty',
       admin       : ['Srpopty'],
       id          : '37ddf8a0a0a802ec7dd0f6c19b1ed497',
-        language: 'en',
+        language: 'zh-CN',
       distractionFreeMode: true
     });
     gitalk.render('gitalk-container');

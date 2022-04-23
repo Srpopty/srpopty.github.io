@@ -54,7 +54,15 @@
     isPost : true
   };
 </script>
-
+<script>
+    function urldecode(str, charset = 'utf-8') {
+        var script = document.createElement('script');
+        script.id = '_urlDecodeFn_';
+        script.src = 'data:text/javascript;charset=' + charset + ',window._urldecoded = "' + str + '";document.getElementById("_urlDecodeFn_").parentNode.removeChild(document.getElementById("_urlDecodeFn_"));';
+        document.body.appendChild(script);
+        return window._urldecoded;
+    }
+</script>
   <title>HCTF2018 Bottle Writeup | Shadow Gallery</title>
   
 
@@ -462,7 +470,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       owner       : 'Srpopty',
       admin       : ['Srpopty'],
       id          : 'e5c41483a31d52b8de5a33362689236a',
-        language: 'en',
+        language: 'zh-CN',
       distractionFreeMode: true
     });
     gitalk.render('gitalk-container');
