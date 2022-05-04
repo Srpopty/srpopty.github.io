@@ -1231,7 +1231,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #7cb3ff;
+  background: #9edea8;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2417,4 +2417,7 @@ code {
 }
 .tag-cloud a:hover {
   color: #fff !important;
+}
+blockquote {
+  color: #a8a8a8;
 }
