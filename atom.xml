@@ -436,9 +436,9 @@
     <category term="CTF" scheme="https://srpopty.github.io/categories/CTF/"/>
     
     
-    <category term="WriteUp" scheme="https://srpopty.github.io/tags/WriteUp/"/>
-    
     <category term="BlueWhale" scheme="https://srpopty.github.io/tags/BlueWhale/"/>
+    
+    <category term="WriteUp" scheme="https://srpopty.github.io/tags/WriteUp/"/>
     
     <category term="Pwn" scheme="https://srpopty.github.io/tags/Pwn/"/>
     
