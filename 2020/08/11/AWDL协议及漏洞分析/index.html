@@ -4,7 +4,7 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
@@ -433,7 +433,7 @@
 <h2 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h2><p>当发送方在AirDrop界面中选择其中一个接收方后，双方将再次建立一个TLS链接，AirDrop将会向接收方发送一个包含文件元数据与缩略图的HTTP Post请求(路径为/Ask)。接收方收到请求后会弹出包含该文件缩略图的界面以提示用户是否决定接收该文件。若接收方决定接收(返回HTTP 200 OK)，则将继续启动数据传输过程，发送方会将文件使用HTTP Post到接收方的设备里(路径为/Upload)。</p>
 <h1 id="强制激活AWDL"><a href="#强制激活AWDL" class="headerlink" title="强制激活AWDL"></a>强制激活AWDL</h1><p>苹果为了节省能源消耗规定AWDL必须显示激活(例如AirDrop使用BLE广播)。在AirDrop允许任何人的模式下任何设备的BLE广播都将会激活目标设备的AWDL接口，但是当AirDrop处于仅联系人的模式下，只有在BLE广播中存在目标设备中联系人哈希的情况下才会激活目标设备的AWDL接口。</p>
 <p>由于广播BLE时携带的联系人散列仅为SHA2的前2个字节，因此可以通过暴力枚举目标设备中联系人哈希的方法来强制激活处于仅联系人模式下的AWDL接口，其枚举空间仅为<code>2^16=65535</code>，而一个BLE帧就可以携带4个联系人散列，因此在最坏的情况下攻击者只需要短时间发送16384个BLE帧就可以激活目标设备的AWDL。蓝牙标准规定每一个BLE帧的最小发送间隔为100 ms，则最多需要<code>16384*100/1000/60 ≈ 27</code>分钟遍历整个枚举空间，虽然标准规定的最小发送间隔是写在蓝牙固件中的，但是可以修改固件来绕过这个最小发送间隔，原论文作者使用了Nordic nRF51822，修改了最小发送间隔为0.625 ms，理论上仅需10.24 s就可以遍历整个枚举空间，原论文作者修改的固件源码如下，BLE同时监听37，38，39三个信道。另外原论文作者使用了另一个无线网卡以嗅探数据帧，当枚举成功后目标设备会向发送者发送AWDL同步动作帧。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint8_t</span> *le_adv = airdrop_init_template()</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">uint16_t</span> h = <span class="number">0</span>; <span class="comment">/* loop */</span>; h += <span class="number">4</span>) &#123;</span><br><span class="line">	airdrop_set_hashes(le_adv, h, h+<span class="number">1</span>, h+<span class="number">2</span>, h+<span class="number">3</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">uint16_t</span> chan = <span class="number">37</span>; chan &lt; <span class="number">40</span>; chan++) &#123;</span><br><span class="line">		le_adv_tx(le_adv, chan);</span><br><span class="line">		sleep(<span class="number">0.625</span> <span class="comment">/* in milliseconds */</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> *le_adv = airdrop_init_template()</span><br><span class="line"><span class="keyword">for</span> (<span class="type">uint16_t</span> h = <span class="number">0</span>; <span class="comment">/* loop */</span>; h += <span class="number">4</span>) &#123;</span><br><span class="line">	airdrop_set_hashes(le_adv, h, h+<span class="number">1</span>, h+<span class="number">2</span>, h+<span class="number">3</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">uint16_t</span> chan = <span class="number">37</span>; chan &lt; <span class="number">40</span>; chan++) &#123;</span><br><span class="line">		le_adv_tx(le_adv, chan);</span><br><span class="line">		sleep(<span class="number">0.625</span> <span class="comment">/* in milliseconds */</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>原论文作者最后通过实验(假设BLE扫描窗口/持续时间为30 ms，扫描间隔为300 ms)发现当通讯录中仅有10个人时，平均10秒就可以成功枚举出散列，当通讯录人数超过100人时仅需不到1秒，通讯录人数越多，暴破速度越快，此外原论文作者统计发现平均每一个用户都有超过136个联系人，因此该攻击方法在现实中是相当可行的。</p>
 <h1 id="用户隐私泄露"><a href="#用户隐私泄露" class="headerlink" title="用户隐私泄露"></a>用户隐私泄露</h1><p>为了保护用户隐私安全，避免用户被追踪，所有的苹果设备均实现了MAC地址随机化，但是AWDL动作帧中还是包含了部分用户敏感信息。</p>
@@ -556,14 +556,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -602,7 +602,7 @@
 <div class="copyright">
   
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

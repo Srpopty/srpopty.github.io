@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Shell commands for web server environment configuration in Ubuntu, quickly build a web server environment.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web Server Environment Configuration CheatSheet">
+<meta property="og:url" content="https://srpopty.github.io/2023/02/15/Web-Server-Environment-Configuration-CheatSheet/index.html">
+<meta property="og:site_name" content="Shadow Gallery">
+<meta property="og:description" content="Shell commands for web server environment configuration in Ubuntu, quickly build a web server environment.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-15T07:19:15.000Z">
+<meta property="article:modified_time" content="2023-02-15T07:19:15.000Z">
+<meta property="article:author" content="Srpopty">
+<meta property="article:tag" content="CheatSheet">
+<meta property="article:tag" content="Web">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://srpopty.github.io/2023/02/15/Web-Server-Environment-Configuration-CheatSheet/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>Web Server Environment Configuration CheatSheet | Shadow Gallery</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Shadow Gallery" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shadow Gallery</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Live in the shadow</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://srpopty.github.io/2023/02/15/Web-Server-Environment-Configuration-CheatSheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Srpopty">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shadow Gallery">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Web Server Environment Configuration CheatSheet
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-15 15:19:15" itemprop="dateCreated datePublished" datetime="2023-02-15T15:19:15+08:00">2023-02-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hack/" itemprop="url" rel="index"><span itemprop="name">Hack</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">Shell commands for web server environment configuration in Ubuntu, quickly build a web server environment.</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Web-Server-Environment-Configuration"><a href="#Web-Server-Environment-Configuration" class="headerlink" title="Web Server Environment Configuration"></a>Web Server Environment Configuration</h1><hr>
+<h2 id="Basic-Environment"><a href="#Basic-Environment" class="headerlink" title="Basic Environment"></a>Basic Environment</h2><p>基础环境配置，安装常用 shell 工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update &amp;&amp; sudo apt-get upgrade -y &amp;&amp; sudo apt-get dist-upgrade -y &amp;&amp; sudo apt autoremove -y</span><br><span class="line">sudo apt-get install -y zsh vim curl wget cloc unzip zip graphviz tree build-essential make cmake git openssh-server netcat net-tools tmux</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;set -g mouse on&quot;</span> &gt; ~/.tmux.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="ZSH"><a href="#ZSH" class="headerlink" title="ZSH"></a>ZSH</h3><p>安装 zsh，更换默认 shell 为 oh-my-zsh，同时安装语法高亮与自动补全插件，并且更换 zsh 的主题为 bira。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">chsh -s $(<span class="built_in">which</span> zsh)</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh</span><br><span class="line"><span class="built_in">cp</span> ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line">sed -i <span class="string">&#x27;s/plugins=(git)/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/g&#x27;</span> ~/.zshrc</span><br><span class="line">sed -i <span class="string">&#x27;s/ZSH_THEME=&quot;robbyrussell&quot;/ZSH_THEME=&quot;bira&quot;/g&#x27;</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="V2ray"><a href="#V2ray" class="headerlink" title="V2ray"></a>V2ray</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo bash &lt;(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)</span><br><span class="line">sudo vim /usr/local/etc/v2ray/config.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="Web-Server"><a href="#Web-Server" class="headerlink" title="Web Server"></a>Web Server</h2><h3 id="Apache2"><a href="#Apache2" class="headerlink" title="Apache2"></a>Apache2</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y apache2</span><br></pre></td></tr></table></figure>
+
+<h4 id="Apache2-Configuration"><a href="#Apache2-Configuration" class="headerlink" title="Apache2 Configuration"></a>Apache2 Configuration</h4><p>修改Apache2 mpm-prefork模式的并发数量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i <span class="string">&quot;s/StartServers\s+\d+/StartServers 20/g&quot;</span> /etc/apache2/mods-available/mpm_prefork.conf</span><br><span class="line">sudo sed -i <span class="string">&quot;s/MinSpareServers\s+\d+/MinSpareServers 20/g&quot;</span> /etc/apache2/mods-available/mpm_prefork.conf</span><br><span class="line">sudo sed -i <span class="string">&quot;s/MaxSpareServers\s+\d+/MaxSpareServers 30/g&quot;</span> /etc/apache2/mods-available/mpm_prefork.conf</span><br><span class="line">sudo sed -i <span class="string">&quot;s/MaxClients\s+\d+/MaxClients 500/g&quot;</span> /etc/apache2/mods-available/mpm_prefork.conf</span><br><span class="line">sudo sed -i <span class="string">&quot;s/MaxRequestsPerChild\s+\d+/MaxRequestsPerChild 10000/g&quot;</span> /etc/apache2/mods-available/mpm_prefork.conf</span><br><span class="line">sudo sed -i <span class="string">&quot;11a\\\tServerLimit 500&quot;</span> /etc/apache2/mods-available/mpm_prefork.conf</span><br></pre></td></tr></table></figure>
+
+<p>开启 URL 重写，设置默认的ServerName，并重启 Apache。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i <span class="string">&quot;s/AllowOverride None/AllowOverride ALL/g&quot;</span> /etc/apache2/apache2.conf</span><br><span class="line">sudo a2enmod rewrite</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;ServerName localhost&quot;</span> | sudo <span class="built_in">tee</span> -a /etc/apache2/apache2.conf</span><br><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+
+<h3 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># TODO</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Server-Side-Languages"><a href="#Server-Side-Languages" class="headerlink" title="Server-Side Languages"></a>Server-Side Languages</h2><h3 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y php libapache2-mod-php</span><br></pre></td></tr></table></figure>
+
+<h4 id="Dependency"><a href="#Dependency" class="headerlink" title="Dependency"></a>Dependency</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y <span class="string">&quot;php-(bcmath|gmp|ldap|simplexml|mysqli|curl|dom|xml|intl|pdo|gd|mysql|json|imap|imagick|sqlite3|zip|soap|mbstring|cgi|fpm|pear)&quot;</span></span><br><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+
+<h4 id="Composer"><a href="#Composer" class="headerlink" title="Composer"></a>Composer</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php -r <span class="string">&quot;copy(&#x27;https://getcomposer.org/installer&#x27;, &#x27;composer-setup.php&#x27;);&quot;</span>;</span><br><span class="line">sudo php composer-setup.php --install-dir=/usr/bin --filename=composer;</span><br><span class="line"><span class="built_in">rm</span> composer-setup.php</span><br></pre></td></tr></table></figure>
+
+<h4 id="PHP-Multi-Version"><a href="#PHP-Multi-Version" class="headerlink" title="PHP Multi-Version"></a>PHP Multi-Version</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:ondrej/php &amp;&amp; sudo add-apt-repository ppa:ondrej/apache2</span><br><span class="line"><span class="comment"># Install another php.</span></span><br><span class="line">sudo apt-get install -y php5.6 php7.4 php8.1</span><br><span class="line">sudo apt-get install -y <span class="string">&quot;php5.6-(bcmath|gmp|ldap|mysqli|curl|dom|xml|intl|pdo|gd|mysql|json|imap|imagick|sqlite3|zip|soap|mbstring|cgi|fpm|pear)&quot;</span></span><br><span class="line">sudo apt-get install -y <span class="string">&quot;php7.4-(bcmath|gmp|ldap|mysqli|curl|dom|xml|intl|pdo|gd|mysql|json|imap|imagick|sqlite3|zip|soap|mbstring|cgi|fpm|pear)&quot;</span></span><br><span class="line">sudo apt-get install -y <span class="string">&quot;php8.1-(bcmath|gmp|ldap|mysqli|curl|dom|xml|intl|pdo|gd|mysql|json|imap|imagick|sqlite3|zip|soap|mbstring|cgi|fpm|pear)&quot;</span></span><br><span class="line">sudo apt-get update &amp;&amp; sudo apt-get upgrade -y &amp;&amp; sudo apt-get dist-upgrade -y &amp;&amp; sudo apt autoremove -y</span><br><span class="line"><span class="comment"># Switch php for apache. Disable current used php.</span></span><br><span class="line">sudo a2dismod php-7.4</span><br><span class="line"><span class="comment"># Enable the php which you want to use.</span></span><br><span class="line">sudo a2enmod php-8.1</span><br><span class="line"><span class="comment"># Reboot server.</span></span><br><span class="line">sudo systemctl restart apache2</span><br><span class="line"><span class="comment"># Switch php for commandline.</span></span><br><span class="line">sudo update-alternatives --config php</span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-INI-Configuration"><a href="#PHP-INI-Configuration" class="headerlink" title="PHP INI Configuration"></a>PHP INI Configuration</h3><p>仅在测试环境下可能会用到的配置，为了便于 debug。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo sed -i <span class="string">&quot;s/disable_functions = /; disable_functions = /g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/max_execution_time = 30/max_execution_time = 60/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/max_input_time = 60/max_input_time = -1/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/;max_input_vars = 1000/max_input_vars = 3000/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/memory_limit = 128M/memory_limit = 256M/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/display_errors = Off/display_errors = On/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/display_startup_errors = Off/display_startup_errors = On/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/post_max_size = 8M/post_max_size = 32M/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/allow_url_include = Off/allow_url_include = On/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/;mysqli.allow_local_infile = On/mysqli.allow_local_infile = On/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 259200/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo sed -i <span class="string">&quot;s/session.cookie_lifetime = 0/session.cookie_lifetime = 259200/g&quot;</span> /etc/php/?.?/apache2/php.ini</span><br><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+
+<h3 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y default-jdk</span><br></pre></td></tr></table></figure>
+
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y python2 python3 python3-pip python3-flask python3-django python3-requests python3-venv</span><br></pre></td></tr></table></figure>
+
+<h3 id="NodeJS"><a href="#NodeJS" class="headerlink" title="NodeJS"></a>NodeJS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<h3 id="GO"><a href="#GO" class="headerlink" title="GO"></a>GO</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:longsleep/golang-backports</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y golang-go</span><br></pre></td></tr></table></figure>
+
+<h3 id="Rust"><a href="#Rust" class="headerlink" title="Rust"></a>Rust</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto <span class="string">&#x27;=https&#x27;</span> --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-C"><a href="#C-C" class="headerlink" title="C/C++"></a>C/C++</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y gcc g++</span><br></pre></td></tr></table></figure>
+
+<h2 id="Database"><a href="#Database" class="headerlink" title="Database"></a>Database</h2><h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><p>主意安装完成后需要从 <code>/etc/mysql/debian.cnf</code> 中获取默认的 MySQL 用户名和密码，用此用户名密码登录成功后再修改 root 的密码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y mysql-server mysql-client</span><br><span class="line"><span class="comment"># Get mysql default username.</span></span><br><span class="line">sudo <span class="built_in">cat</span> /etc/mysql/debian.cnf | grep user</span><br><span class="line"><span class="comment"># Get mysql default password.</span></span><br><span class="line">sudo <span class="built_in">cat</span> /etc/mysql/debian.cnf | grep password</span><br><span class="line"><span class="comment"># Using it to login mysqsl.</span></span><br><span class="line">mysql -u xxxx -p</span><br><span class="line"><span class="comment"># Change password to &quot;root&quot;.</span></span><br><span class="line">mysql&gt; alter user <span class="string">&#x27;root&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identified with mysql_native_password by <span class="string">&#x27;root&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y redis</span><br></pre></td></tr></table></figure>
+
+<h3 id="SQLite"><a href="#SQLite" class="headerlink" title="SQLite"></a>SQLite</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y sqlite3</span><br></pre></td></tr></table></figure>
+
+<h3 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y postgresql</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CheatSheet/" rel="tag"># CheatSheet</a>
+              <a href="/tags/Web/" rel="tag"># Web</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/04/XXE-CheatSheet/" rel="prev" title="XXE CheatSheet">
+      <i class="fa fa-chevron-left"></i> XXE CheatSheet
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Web-Server-Environment-Configuration"><span class="nav-number">1.</span> <span class="nav-text">Web Server Environment Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-Environment"><span class="nav-number">1.1.</span> <span class="nav-text">Basic Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ZSH"><span class="nav-number">1.1.1.</span> <span class="nav-text">ZSH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V2ray"><span class="nav-number">1.1.2.</span> <span class="nav-text">V2ray</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-Server"><span class="nav-number">1.2.</span> <span class="nav-text">Web Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Apache2"><span class="nav-number">1.2.1.</span> <span class="nav-text">Apache2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Apache2-Configuration"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Apache2 Configuration</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx"><span class="nav-number">1.2.2.</span> <span class="nav-text">Nginx</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-Side-Languages"><span class="nav-number">1.3.</span> <span class="nav-text">Server-Side Languages</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP"><span class="nav-number">1.3.1.</span> <span class="nav-text">PHP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dependency"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Dependency</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Composer"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Composer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PHP-Multi-Version"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">PHP Multi-Version</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-INI-Configuration"><span class="nav-number">1.3.2.</span> <span class="nav-text">PHP INI Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java"><span class="nav-number">1.3.3.</span> <span class="nav-text">Java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python"><span class="nav-number">1.3.4.</span> <span class="nav-text">Python</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NodeJS"><span class="nav-number">1.3.5.</span> <span class="nav-text">NodeJS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GO"><span class="nav-number">1.3.6.</span> <span class="nav-text">GO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rust"><span class="nav-number">1.3.7.</span> <span class="nav-text">Rust</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-C"><span class="nav-number">1.3.8.</span> <span class="nav-text">C&#x2F;C++</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Database"><span class="nav-number">1.4.</span> <span class="nav-text">Database</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL"><span class="nav-number">1.4.1.</span> <span class="nav-text">MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">1.4.2.</span> <span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQLite"><span class="nav-number">1.4.3.</span> <span class="nav-text">SQLite</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PostgreSQL"><span class="nav-number">1.4.4.</span> <span class="nav-text">PostgreSQL</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Srpopty</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Srpopty" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Srpopty" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:srpopty@outlook.com" title="E-Mail → mailto:srpopty@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Srpopty</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fb9b672afa74e328fbe8',
+      clientSecret: '7b3efe103d7e694008b943a67e5273ad36ee14a0',
+      repo        : 'srpopty.github.io',
+      owner       : 'Srpopty',
+      admin       : ['Srpopty'],
+      id          : '68f31f0ca5a2fb5d5b029d3fdda60c60',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
