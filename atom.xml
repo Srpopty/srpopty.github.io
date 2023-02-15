@@ -30,7 +30,7 @@
     
     
     
-    <category term="Heck" scheme="https://srpopty.github.io/categories/Heck/"/>
+    <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
     <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
@@ -55,7 +55,7 @@
     
     
     
-    <category term="Heck" scheme="https://srpopty.github.io/categories/Heck/"/>
+    <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
     <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
@@ -80,7 +80,7 @@
     
     
     
-    <category term="Heck" scheme="https://srpopty.github.io/categories/Heck/"/>
+    <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
     <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
@@ -105,7 +105,7 @@
     
     
     
-    <category term="Heck" scheme="https://srpopty.github.io/categories/Heck/"/>
+    <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
     <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
@@ -130,7 +130,7 @@
     
     
     
-    <category term="Heck" scheme="https://srpopty.github.io/categories/Heck/"/>
+    <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
     <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
@@ -155,7 +155,7 @@
     
     
     
-    <category term="Heck" scheme="https://srpopty.github.io/categories/Heck/"/>
+    <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
     <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
@@ -180,7 +180,7 @@
     
     
     
-    <category term="Heck" scheme="https://srpopty.github.io/categories/Heck/"/>
+    <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
     <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
@@ -436,9 +436,9 @@
     <category term="CTF" scheme="https://srpopty.github.io/categories/CTF/"/>
     
     
-    <category term="BlueWhale" scheme="https://srpopty.github.io/tags/BlueWhale/"/>
-    
     <category term="WriteUp" scheme="https://srpopty.github.io/tags/WriteUp/"/>
+    
+    <category term="BlueWhale" scheme="https://srpopty.github.io/tags/BlueWhale/"/>
     
     <category term="Pwn" scheme="https://srpopty.github.io/tags/Pwn/"/>
     
