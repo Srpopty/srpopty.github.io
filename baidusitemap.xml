@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/</loc>
+    <lastmod>2023-02-21</lastmod>
+  </url>
+  <url>
+    <loc>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/</loc>
+    <lastmod>2023-02-21</lastmod>
+  </url>
+  <url>
     <loc>https://srpopty.github.io/2023/02/15/Vulnerability-EyouCMS-V1.6.0-Backend-Reflected-XSS-(CVE-2022-45542)/</loc>
     <lastmod>2023-02-15</lastmod>
   </url>
@@ -125,7 +133,7 @@
     <lastmod>2018-08-29</lastmod>
   </url>
   <url>
-    <loc>https://srpopty.github.io/2018/07/27/Vulnerability%20-%20%E7%99%BE%E5%B9%B4%E4%BA%BA%E5%AF%BF%E4%BF%9D%E9%99%A9%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E7%BD%91%E7%AB%99%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87/</loc>
+    <loc>https://srpopty.github.io/2018/07/27/Vulnerability-%E7%99%BE%E5%B9%B4%E4%BA%BA%E5%AF%BF%E4%BF%9D%E9%99%A9%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E7%BD%91%E7%AB%99%E8%A1%A8%E5%8D%95%E9%AA%8C%E8%AF%81%E7%A0%81%E7%BB%95%E8%BF%87/</loc>
     <lastmod>2018-07-27</lastmod>
   </url>
   <url>
