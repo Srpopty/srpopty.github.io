@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/</loc>
+    <loc>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/</loc>
     <lastmod>2023-02-21</lastmod>
   </url>
   <url>
-    <loc>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-Reflected-XSS-(CVE-2023-xxxx)/</loc>
+    <loc>https://srpopty.github.io/2023/02/21/Vulnerability-Typecho-V1.2.0-Backend-DOM-Based-XSS-(CVE-2023-xxxx)/</loc>
     <lastmod>2023-02-21</lastmod>
   </url>
   <url>
