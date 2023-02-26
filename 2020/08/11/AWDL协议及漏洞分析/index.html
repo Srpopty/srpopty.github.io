@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="苹果AWDL传输协议内容及漏洞分析">
@@ -34,6 +34,8 @@
 <meta property="article:modified_time" content="2020-08-11T06:54:10.000Z">
 <meta property="article:author" content="Srpopty">
 <meta property="article:tag" content="Wireless">
+<meta property="article:tag" content="Apple">
+<meta property="article:tag" content="SDR">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://srpopty.github.io/2020/08/11/AWDL%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/">
@@ -110,6 +112,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -121,6 +124,26 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-knowledge">
+
+    <a href="/knowledge/" rel="section"><i class="fa fa-fw fa-book"></i>知识库</a>
+
+  </li>
+        <li class="menu-item menu-item-life">
+
+    <a href="/life/" rel="section"><i class="fa fa-fw fa-rocket"></i>随想</a>
+
+  </li>
+        <li class="menu-item menu-item-ctf">
+
+    <a href="/ctf/" rel="section"><i class="fa fa-fw fa-flag"></i>ctf</a>
+
+  </li>
+        <li class="menu-item menu-item-vulnerabilities">
+
+    <a href="/vulnerabilities/" rel="section"><i class="fa fa-fw fa-eye"></i>漏洞</a>
 
   </li>
         <li class="menu-item menu-item-tags">
@@ -138,9 +161,44 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
 </div>
     </header>
 
@@ -214,14 +272,10 @@
       
         <blockquote>
 <p>Milan Stute, David Kreitschmann, and Matthias Hollick. One Billion Apples’ Secret Sauce: Recipe for the Apple Wireless Direct Link Ad hoc Protocol. The 24th Annual International Conference on Mobile Computing and Networking (MobiCom ’18), October 29–November 2, 2018, New Delhi, India. ACM. Best Community Paper Award. doi:10.1145/3241539.3241566</p>
-</blockquote>
-<blockquote>
 <p>Milan Stute, Sashank Narain, Alex Mariotto, Alexander Heinrich, David Kreitschmann, Guevara Noubir, and Matthias Hollick. A Billion Open Interfaces for Eve and Mallory: MitM, DoS, and Tracking Attacks on iOS and macOS Through Apple Wireless Direct Link. 28th USENIX Security Symposium (USENIX Security ’19), August 14–16, 2019, Santa Clara, CA, USA.</p>
-</blockquote>
-<blockquote>
 <p>本文章主要涉及以上两篇论文的总结与归纳，其中第一篇论文作者主要通过逆向对 AWDL 协议进行分析与测试，第二篇论文作者通过对 ADWL 进行安全性分析，发现了四个高危漏洞。另外本文章主要关注于 AWDL 协议与其漏洞内容，不涉及讨论对 AWDL 协议具体的逆向过程与效率分析结果。</p>
 </blockquote>
-<h1 id="背景简介"><a href="# 背景简介" class="headerlink" title="背景简介"></a>背景简介 </h1><p> 基于苹果无线直连 (Apple Wireless Direct Link, AWDL) 协议的 AirDrop 与 AirPlay 广泛在苹果生态中的操作系统里使用，包括 iOS，MacOS，WatchOS 等等。通过 AWDL 协议使得数十亿不同的苹果设备之间可以无需连接无线接入点就很方便的互相传递信息。随着 AWDL 协议的广泛使用，该协议也牵涉很多用户的隐私，因此协议安全性是至关重要的，原论文作者首次对 AWDL 协议与其低功耗蓝牙 (Bluetooth Low Energy, BLE) 集成进行安全性分析与代码逆向，通过分析逆向结果，作者发现了一些不同类型的安全漏洞：</p>
+<h1 id="背景简介"><a href="# 背景简介" class="headerlink" title="背景简介"></a>背景简介 </h1><p> 基于苹果无线直连（Apple Wireless Direct Link, AWDL）协议的 AirDrop 与 AirPlay 广泛在苹果生态中的操作系统里使用，包括 iOS，MacOS，WatchOS 等等。通过 AWDL 协议使得数十亿不同的苹果设备之间可以无需连接无线接入点就很方便的互相传递信息。随着 AWDL 协议的广泛使用，该协议也牵涉很多用户的隐私，因此协议安全性是至关重要的，原论文作者首次对 AWDL 协议与其低功耗蓝牙（Bluetooth Low Energy, BLE）集成进行安全性分析与代码逆向，通过分析逆向结果，作者发现了一些不同类型的安全漏洞：</p>
 <ol>
 <li>设备长期跟踪，使得 MAC 地址随机化无效，可能会泄露设备所有者的个人信息。</li>
 <li>针对与 AWDL 协议机制，通过去同步目标的信道从而阻止目标设备通信，形成 DOS 攻击。</li>
@@ -229,7 +283,7 @@
 <li>对 WIFI 驱动中的 AWDL 协议可以进行两次 DOS 攻击，该 DOS 攻击可以针对单一目标设备或者周围所有设备。</li>
 </ol>
 <p>作者针对以上四个安全漏洞制作了 POC，并且演示了通过 20$ 的 micro:bit 设备与无线网卡即可实施攻击。</p>
-<h1 id="AWDL- 协议"><a href="#AWDL- 协议" class="headerlink" title="AWDL 协议"></a>AWDL 协议 </h1><p> 苹果无线直连 (Apple Wireless Direct Link, AWDL) 协议是基于 IEEE 802.11 标准的苹果公司专利无线 AD-Hoc (点对点) 通讯协议，苹果公司于 2014 年首次将该协议整合进包括 iPhone 与 Mac 的产品线中，具体实现体现在 AirDrop 与 AirPlay 等应用中，无需连接 AP，可以很方便的实现信息点对点跨设备传输。原论文作者在 2018 年首次对该协议进行逆向，通过代码静态分析与运行时分析解析该协议框架内容与帧格式，编写了可以解析 AWDL 帧的 WireShark 解析器。</p>
+<h1 id="AWDL- 协议"><a href="#AWDL- 协议" class="headerlink" title="AWDL 协议"></a>AWDL 协议 </h1><p> 苹果无线直连 AWDL 协议是基于 IEEE 802.11 标准的苹果公司专利无线 AD-Hoc（点对点）通讯协议，苹果公司于 2014 年首次将该协议整合进包括 iPhone 与 Mac 的产品线中，具体实现体现在 AirDrop 与 AirPlay 等应用中，无需连接 AP，可以很方便的实现信息点对点跨设备传输。原论文作者在 2018 年首次对该协议进行逆向，通过代码静态分析与运行时分析解析该协议框架内容与帧格式，编写了可以解析 AWDL 帧的 WireShark 解析器。</p>
 <h2 id="帧类型与结构"><a href="# 帧类型与结构" class="headerlink" title="帧类型与结构"></a>帧类型与结构</h2><p>AWDL 协议主要有两种帧：动作帧 (Action Frame, AF) 与数据帧 (Data Frame, DF)，其中动作帧主要用于网络节点同步，主节点选举等，数据帧主要用于数据的传输。</p>
 <h3 id="动作帧"><a href="# 动作帧" class="headerlink" title="动作帧"></a>动作帧 </h3><p> 动作帧 (Action Frame) 的帧结构如图所示，动作帧基于 802.11 的基础帧结构的扩展，除了 802.11 的基础帧结构，额外由一个固定长度的报头与多个 TLV 字段构成。</p>
 <p>![](/AWDL 协议及漏洞分析 /af.jpg)</p>
@@ -318,7 +372,6 @@
 <td>TLV 里包含了动作帧的控制信息，一个动作帧后会附着若干个 TLV 字段，该字段由 1 字节 type 子字段与 2 字节 length 子字段，length 子字段代表后续的 value 子字段长度</td>
 </tr>
 </tbody></table>
-<hr>
 <p>动作帧分为两种子类型，由 Subtype 字段指示</p>
 <ul>
 <li>周期同步帧 (Periodic Synchronization Frame, PSF)：Subtype 字段为 0，主要用于设备之间的同步。</li>
@@ -392,7 +445,8 @@
 <h2 id="节点寻址"><a href="# 节点寻址" class="headerlink" title="节点寻址"></a>节点寻址 </h2><p> 苹果使用 MAC 地址随机化以保护用户隐私，每次接口被激活时将会生成一个随机的 MAC 地址。AWDL 协议为了在网络集群中确定一个节点的 IPV6 地址需要使用网络层的协议解决，苹果采用了 RFC 4291 [19, Appendix A] 中的算法使用动作帧中的源 MAC 地址生成本地 IPV6 地址。简单来说，对于一个给定的 MAC 地址 <code>u:v:w:x:y:z</code>，生成的 IPV6 地址为 <code>fe:80::u^0x02:v:w:ff::fe:x:y:z</code>。当一个节点收到了第一个动作帧以后就可以根据该帧中的源地址计算出源地址的 IPV6 地址并且将其加入的地址表中，无需使用其他地址解析协议。</p>
 <h2 id="协议内容"><a href="# 协议内容" class="headerlink" title="协议内容"></a>协议内容 </h2><p> 简而言之，每个 AWDL 集群中的节点都会定期广播一系列包含自己可用窗口 (Availability Window, AW) 的动作帧以表示该节点可与其他节点进行通信，之后集群中将会选举出一个主节点，该主节点的作用是使集群中的其他节点保持同步，此外 AWDL 协议还可以使用信道跳变将 AP 调整到其他信道同时与其他节点进行通信，AWDL 还能够处理集群的节点随时退出。</p>
 <h3 id="主节点选举"><a href="# 主节点选举" class="headerlink" title="主节点选举"></a>主节点选举 </h3><p> 主节点在集群中是唯一的，其作用就是使集群中所有的从节点保持时钟同步，主节点广播其时钟信号，从节点收到信号后同步自己的时钟。此外由于集群网络中主节点到某从节点之间可能无法直接到达，需要经过多个从节点，因此该路径上的从节点将临时扮演主节点，称为 “非选举主节点”，重复主节点发出的时钟信号，此外，非选举主节点将使用 Synchronization Tree TLV 宣布自己到主节点之间的路径。</p>
-<p>一个集群可以抽象为一个无向树，当非选举主节点传递时钟信号时可能会在树中遇到环，从而发生传递死循环，如下图所示，主节点的目标是同步 Node4，但是 Node4 还通向 Node3，因此 Node1 到 Node4 将轮流作为非选举主节点向相邻的 Node 同步，造成循环。为了解决这个问题，每个动作帧中都包含一个 Synchronization Tree TLV，其中保存了所有节点到主节点的列表，如果一个节点发现自己已经在通往目标节点的路径上时将拒接接收非选举主节点的时钟信号，例如 Node3 已经由 Node1 同步，但是发现自己位于通向 Node4 的路径上，因为来自 Node1 的同步信号将早于来自 Node4 的同步信号，因此将会拒绝接收来自 Node4 的同步。<br>![](/AWDL 协议及漏洞分析 /c.jpg)</p>
+<p>一个集群可以抽象为一个无向树，当非选举主节点传递时钟信号时可能会在树中遇到环，从而发生传递死循环，如下图所示，主节点的目标是同步 Node4，但是 Node4 还通向 Node3，因此 Node1 到 Node4 将轮流作为非选举主节点向相邻的 Node 同步，造成循环。为了解决这个问题，每个动作帧中都包含一个 Synchronization Tree TLV，其中保存了所有节点到主节点的列表，如果一个节点发现自己已经在通往目标节点的路径上时将拒接接收非选举主节点的时钟信号，例如 Node3 已经由 Node1 同步，但是发现自己位于通向 Node4 的路径上，因为来自 Node1 的同步信号将早于来自 Node4 的同步信号，因此将会拒绝接收来自 Node4 的同步。</p>
+<p>![](/AWDL 协议及漏洞分析 /c.jpg)</p>
 <p>每个激活了 AWDL 接口的集群节点将会使用 Election Parameters v2 TLV 广播其主指标，集群中主指标最大的节点将被选举为主节点。主指标是一个度量值，苹果在其专利中宣称该值的选择取决于设备电量，CPU 负载，信号强度等因素，但是原论文作者在测试时发现这个度量值只是随机选择的。</p>
 <p>选举的具体操作为：激活了 AWDL 接口的节点将主指标初始值设置为 60 进行广播（使用一个很小的初始值 60 是为了避免当一个新节点加入集群中时整个集群重新进行选举），之后该节点监听主节点信道 2 秒，如果没有发现集群中存在主节点，那么该节点将会从指定的范围中随机选取一个随机数，对于 v2 版本，该范围为 405 到 436，对于 v3 版本，该范围为 505 到 536，随着版本增加随机数范围的增加可以保证集群中被选举出的主节点都是最新版本的，并且可以向后兼容。此外，原论文作者在测试时发现每个节点不管集群中是否已经存在了一个主节点，只在很短的时间里维护自己的主指标，之后便从范围中选取一个更高的随机数作为新的主指标，除了主指标节点还会维护一个计数器，该计数器的作用就是实现选取更高的随机数 (主指标 = 随机数 + 计数器)，并且该计数器的值将会随着主节点选举结束后随时间线性增长，这表明一个已经存在的主节点可能会被另一个运行相同版本 AWDL 的节点替换掉。</p>
 <p>当两个不同的集群相互接近时，AWDL 会对这两个集群进行合并，由于所有的节点都使用 Election Parameters TLV 广播主指标，当一个集群中的主节点发现另一个集群的主节点发送的主指标时，主指标更高的主节点将会成为集群合并后的主节点。</p>
@@ -400,9 +454,12 @@
 <h3 id="同步"><a href="# 同步" class="headerlink" title="同步"></a>同步 </h3><p> 在选举出主节点的集群中，每一个从节点都将与主节点进行时间同步。AWDL 中存在可用窗口作为时间同步的最小划分。可用窗口 (Availability Window, AW) 表示设备可以进行通信的一段固定时间，AWDL 协议基于单位时间 (Time Unit, TU) 计时，1TU=1024 μs，而每一个 AW 的时长为 16TU，该值使用 Synchronization Parameters TLV 进行传递。为了降低性能功耗，节点不会监听每一个 AW，而是以 4 个窗口为一个监听周期，第一个窗口为 AW，后三个窗口被称为扩展窗口 (Extension Window，EW)，EW 的长度与 AW 相同。在 AWDL 中允许在一个周期中配置不同数量的 EW，但是原论文作者在逆向时发现该值恒为 3。因此一个节点的最小监听周期为 4 个连续的 AW/EW，称为扩展可用窗口 (Extended Availability Window, EAW)，即 <code>1 EAW = AW + 3EW = 64 TU</code>。</p>
 <p>为了进行同步，主节点需要在每个同步动作帧中宣布主节点下一个可用窗口的起始，主节点在动作帧里包含当前的 AW 或 EW 的序列号 $i (0&lt;=i&lt;2^(16))$，以及当前 AW (或 EW) 到下一个 EAW 的单位时间 TU 的数量 $t_(AW)$，如下图所示，在第 40 个 AW 结束，第 41 个 EW 开始时主节点发送同步动作帧，这时当前 AW/EW 的序列号为 41，距离下一个 EAW 开始还需要 <code>3*16=48 TU</code>。</p>
 <p>![](/AWDL 协议及漏洞分析 /eaw.jpg)</p>
-<p>同步的目的就是使集群中所有的从节点都采用和主节点一样的时间进度，主节点距离下一个 EAW 还需要多少时间，所有从节点也需要知道这个时间才能达到同步，因此当一个从节点在 $T_(Rx)$ 时间收到来自主节点的同步帧后，计算当前时间点到下一个主节点 AW 的时间间隔 $T_(AW)$ 的公式如下，在该公式中 $t_(air)$ 代表使用 WiFi 在空气中的传输时间，在实际计算时该值会被忽略，在近距离传播的环境下误差大概为 3 ms。<br>$$T_(AW)=t_(AW)*1024-(T_(TxPhy)-T_(TxTarget))+t_(air)+T_(Rx)$$</p>
-<h3 id="信道序列"><a href="# 信道序列" class="headerlink" title="信道序列"></a>信道序列 </h3><p> 当所有节点的 AW 同步后，所有节点就处于同一个 AW 下，准备进行通信，这时就需要指示节点使用哪个信道进行通信并且将信道序列进行对齐以保证两个节点之间可以同时使用该信道通信。AWDL 常用的社交信道为 44，6，149 或 0，其中 0 代表节点没有监听任何信道。AWDL 将 AW 序列号与可用的信道序列进行映射，节点使用 Synchronization Parameters TLV 传输目前可用的信道序列，该 TLV 的格式如下图所示。<br>![](/AWDL 协议及漏洞分析 /spt.jpg)</p>
-<p>传输的信道序列的个数 c+1 固定为 16，但是类似于 AW，信道序列可以使用 step 字段进行延长 (AW 中的 step 为 3，为一个 EAW 扩展了 3 个 EW)，原论文逆向发现该 step 恒为 3，表示一个信道的使用时间将持续 4 个 AW 或者 1 个 EAW，如下图所示。<br>![](/AWDL 协议及漏洞分析 /channel.jpg)</p>
+<p>同步的目的就是使集群中所有的从节点都采用和主节点一样的时间进度，主节点距离下一个 EAW 还需要多少时间，所有从节点也需要知道这个时间才能达到同步，因此当一个从节点在 $T_(Rx)$ 时间收到来自主节点的同步帧后，计算当前时间点到下一个主节点 AW 的时间间隔 $T_(AW)$ 的公式如下，在该公式中 $t_(air)$ 代表使用 WiFi 在空气中的传输时间，在实际计算时该值会被忽略，在近距离传播的环境下误差大概为 3 ms。</p>
+<p>$$T_(AW)=t_(AW)*1024-(T_(TxPhy)-T_(TxTarget))+t_(air)+T_(Rx)$$</p>
+<h3 id="信道序列"><a href="# 信道序列" class="headerlink" title="信道序列"></a>信道序列 </h3><p> 当所有节点的 AW 同步后，所有节点就处于同一个 AW 下，准备进行通信，这时就需要指示节点使用哪个信道进行通信并且将信道序列进行对齐以保证两个节点之间可以同时使用该信道通信。AWDL 常用的社交信道为 44，6，149 或 0，其中 0 代表节点没有监听任何信道。AWDL 将 AW 序列号与可用的信道序列进行映射，节点使用 Synchronization Parameters TLV 传输目前可用的信道序列，该 TLV 的格式如下图所示。</p>
+<p>![](/AWDL 协议及漏洞分析 /spt.jpg)</p>
+<p>传输的信道序列的个数 c+1 固定为 16，但是类似于 AW，信道序列可以使用 step 字段进行延长 (AW 中的 step 为 3，为一个 EAW 扩展了 3 个 EW)，原论文逆向发现该 step 恒为 3，表示一个信道的使用时间将持续 4 个 AW 或者 1 个 EAW，如下图所示。</p>
+<p>![](/AWDL 协议及漏洞分析 /channel.jpg)</p>
 <p>当一个节点收到来自主节点的信道序列以及当前 AW 序列号后可以使用如下的公式计算 (映射) 出当前 AW 需要使用信道 C。<br>$$C=i mod ((c+1)*(step+1))$$</p>
 <p>由于 AWDL 协议中 c 与 step 都是恒定值，所以 <code>(c+1)*(step+1) = 64 AW</code>，而 <code>64 AW * 16TU/AW = 1048576 μs ≈ 1 s</code>，即每个信道大约持续 1s 后跳变。</p>
 <h2 id="相关资源"><a href="# 相关资源" class="headerlink" title="相关资源"></a>相关资源</h2><ul>
@@ -411,18 +468,24 @@
 <li>原论文作者使用 Python 实现了与 AirDrop 等价的开源程序 <a target="_blank" rel="noopener" href="https://github.com/seemoo-lab/opendrop">OpenDrop</a></li>
 </ul>
 <h1 id="AirDrop- 分析"><a href="#AirDrop- 分析" class="headerlink" title="AirDrop 分析"></a>AirDrop 分析</h1><p>AirDrop 是一个在苹果生态系统里很方便远程传输数据的服务，基于 AWDL 协议使用 BLE 与 WiFi 发现设备与传输数据。设备的 AirDrop 有三种不同的状态：可被所有人发现，仅限联系人发现和禁止任何 AirDrop 连接请求，在默认情况下设备会开始 WiFi 与 BLE，并且设置为仅限联系人发现，此外设备需要被解锁后才可以被发现。</p>
-<p>设备使用 AirDrop 传输数据一共需要经历三个阶段：服务发现，身份认证与数据传输，以传输照片为例，原论文作者提供的示意图如下图所示。<br>![](/AWDL 协议及漏洞分析 /ad.jpg)</p>
+<p>设备使用 AirDrop 传输数据一共需要经历三个阶段：服务发现，身份认证与数据传输，以传输照片为例，原论文作者提供的示意图如下图所示。</p>
+<p>![](/AWDL 协议及漏洞分析 /ad.jpg)</p>
 <h2 id="服务发现"><a href="# 服务发现" class="headerlink" title="服务发现"></a>服务发现 </h2><p> 当照片发送方在照片分享界面中点击 AirDrop (隔空投送) 后，设备广播携带有设备联系人标识符哈希的 BLE 广播。照片接收方设备将定期扫描 BLE 广播，接收方发现 BLE 广播后，若接收方设备设置为仅允许联系人连接，则将 BLE 广播中的联系人标识符哈希与接收方设备通讯里中的联系人哈希进行比较，若至少有一个匹配则激活 AWDL 接口。若接收方设备设置为允许任何人连接，则直接激活 AWDL 接口。接收方激活 AWDL 后与集群进行 AWDL 同步，同步完成后发送方使用 mDNS/DNS-SD 通过 AWDL 接口向接收方请求 AirDrop 服务 (在集群中发现 AirDrop 服务)，并计算出接收方的 IPV6 地址。</p>
 <h2 id="身份认证"><a href="# 身份认证" class="headerlink" title="身份认证"></a>身份认证 </h2><p> 发送方将对集群中每一个发现了 AirDrop 服务的设备建立一个 TLS 的链接，通过向接收方发送 HTTP Post 请求 (路径为 / Discover) 执行一个完整的身份认证握手，如果身份验证成功 (返回 HTTP 200 OK)，则该设备的图标将会出现在发送方的 AirDrop 分享界面中。</p>
-<p>对于 TLS 链接，苹果有两种不同的链接方式：已认证链接 (Authenticated Connection) 和未认证链接 (Unauthenticated Connection)，AirDrop 默认尝试使用已认证链接进行认证建立 TLS 链接。已认证链接只能在拥有 Apple ID 并且互相存在于联系人通讯录的人之间建立。在 AirDrop 设置为仅联系人模式时只会使用已认证链接，而设置为允许任何人连接的模式下两种链接都会存在。经过已认证链接的身份认证后，AirDrop 界面中将会显示接收方的姓名以及联系人照片，如果没有照片则显示联系人姓名首字母的大写。而未认证链接的身份认证后则不会显示任何照片与姓名，联系人头像的位置将会显示默认的头像 (带有头部轮廓的灰色头像)，姓名则会被设备名所替代，原论文中的举例如下：<br>![](/AWDL 协议及漏洞分析 /ui.jpg)</p>
-<p>为了进行身份验证，设备需要证明其拥有与 Apple ID 相关联的联系人标识符 $c_i$(如电话，电子邮件)，该标识符必须存在于设备的联系人通讯录中。当用户使用 Apple ID 登录设备后，将会被分配一个唯一的 UUID。在进行身份验证时会使用哈希散列形式的苹果签名的 “记录数据 (Record Data, RD)”，RD 包含了设备 UUID 与所有设备中的通讯里联系人标识符 $c_i$，其格式如下所示。<br>$$RD = UUID, SHA2 (c_1), …, SHA2 (c_n)$$</p>
-<p>发送方之后对 RD 签名为 $RD_s$，签名格式如下所示，其中 s 均代表苹果证书，sign 代表使用 $s_(VR)$ 对 RD 进行签名。<br>$$RD_s = RD, sign (s_(VR), RD), s_(VR), s_(AAI2)$$</p>
+<p>对于 TLS 链接，苹果有两种不同的链接方式：已认证链接 (Authenticated Connection) 和未认证链接 (Unauthenticated Connection)，AirDrop 默认尝试使用已认证链接进行认证建立 TLS 链接。已认证链接只能在拥有 Apple ID 并且互相存在于联系人通讯录的人之间建立。在 AirDrop 设置为仅联系人模式时只会使用已认证链接，而设置为允许任何人连接的模式下两种链接都会存在。经过已认证链接的身份认证后，AirDrop 界面中将会显示接收方的姓名以及联系人照片，如果没有照片则显示联系人姓名首字母的大写。而未认证链接的身份认证后则不会显示任何照片与姓名，联系人头像的位置将会显示默认的头像 (带有头部轮廓的灰色头像)，姓名则会被设备名所替代，原论文中的举例如下：</p>
+<p>![](/AWDL 协议及漏洞分析 /ui.jpg)</p>
+<p>为了进行身份验证，设备需要证明其拥有与 Apple ID 相关联的联系人标识符 $c_i$(如电话，电子邮件)，该标识符必须存在于设备的联系人通讯录中。当用户使用 Apple ID 登录设备后，将会被分配一个唯一的 UUID。在进行身份验证时会使用哈希散列形式的苹果签名的 “记录数据 (Record Data, RD)”，RD 包含了设备 UUID 与所有设备中的通讯里联系人标识符 $c_i$，其格式如下所示。</p>
+<p>$$RD = UUID, SHA2 (c_1), …, SHA2 (c_n)$$</p>
+<p>发送方之后对 RD 签名为 $RD_s$，签名格式如下所示，其中 s 均代表苹果证书，sign 代表使用 $s_(VR)$ 对 RD 进行签名。</p>
+<p>$$RD_s = RD, sign (s_(VR), RD), s_(VR), s_(AAI2)$$</p>
 <p>在进行认证时接收方设备将会对其通讯录中的每个联系人标识符计算 SHA2，并将其与 $RD_s$ 中包含的哈希进行比较，验证设备 UUID 是否与当前 TLS 链接的证书相匹配。若发送方或接收方未能提供有效的经过苹果签名的 TLS 证书或者没有提供 RD，则 AirDrop 会将其视为未认证链接。</p>
-<p>注：在进行身份认证 (POST /Discover) 与传输请求 (POST /Ask) 时携带的数据均为 RD，在第一阶段广播 BLE 时携带的数据并不是 RD，虽然内容很像，但是只有通讯录联系人的部分哈希散列。</p>
+<blockquote>
+<p>在进行身份认证 (POST /Discover) 与传输请求 (POST /Ask) 时携带的数据均为 RD，在第一阶段广播 BLE 时携带的数据并不是 RD，虽然内容很像，但是只有通讯录联系人的部分哈希散列。</p>
+</blockquote>
 <h2 id="数据传输"><a href="# 数据传输" class="headerlink" title="数据传输"></a>数据传输 </h2><p> 当发送方在 AirDrop 界面中选择其中一个接收方后，双方将再次建立一个 TLS 链接，AirDrop 将会向接收方发送一个包含文件元数据与缩略图的 HTTP Post 请求 (路径为 / Ask)。接收方收到请求后会弹出包含该文件缩略图的界面以提示用户是否决定接收该文件。若接收方决定接收 (返回 HTTP 200 OK)，则将继续启动数据传输过程，发送方会将文件使用 HTTP Post 到接收方的设备里 (路径为 / Upload)。</p>
 <h1 id="强制激活 -AWDL"><a href="# 强制激活 -AWDL" class="headerlink" title="强制激活 AWDL"></a>强制激活 AWDL</h1><p>苹果为了节省能源消耗规定 AWDL 必须显示激活 (例如 AirDrop 使用 BLE 广播)。在 AirDrop 允许任何人的模式下任何设备的 BLE 广播都将会激活目标设备的 AWDL 接口，但是当 AirDrop 处于仅联系人的模式下，只有在 BLE 广播中存在目标设备中联系人哈希的情况下才会激活目标设备的 AWDL 接口。</p>
 <p>由于广播 BLE 时携带的联系人散列仅为 SHA2 的前 2 个字节，因此可以通过暴力枚举目标设备中联系人哈希的方法来强制激活处于仅联系人模式下的 AWDL 接口，其枚举空间仅为 <code>2^16=65535</code>，而一个 BLE 帧就可以携带 4 个联系人散列，因此在最坏的情况下攻击者只需要短时间发送 16384 个 BLE 帧就可以激活目标设备的 AWDL。蓝牙标准规定每一个 BLE 帧的最小发送间隔为 100 ms，则最多需要 <code>16384*100/1000/60 ≈ 27</code> 分钟遍历整个枚举空间，虽然标准规定的最小发送间隔是写在蓝牙固件中的，但是可以修改固件来绕过这个最小发送间隔，原论文作者使用了 Nordic nRF51822，修改了最小发送间隔为 0.625 ms，理论上仅需 10.24 s 就可以遍历整个枚举空间，原论文作者修改的固件源码如下，BLE 同时监听 37，38，39 三个信道。另外原论文作者使用了另一个无线网卡以嗅探数据帧，当枚举成功后目标设备会向发送者发送 AWDL 同步动作帧。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> *le_adv = airdrop_init_template ()</span><br><span class="line"><span class="keyword">for</span> (<span class="type">uint16_t</span> h = <span class="number">0</span>; <span class="comment">/* loop */</span>; h += <span class="number">4</span>) &#123;</span><br><span class="line">	airdrop_set_hashes (le_adv, h, h+<span class="number">1</span>, h+<span class="number">2</span>, h+<span class="number">3</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">uint16_t</span> chan = <span class="number">37</span>; chan &lt; <span class="number">40</span>; chan++) &#123;</span><br><span class="line">		le_adv_tx (le_adv, chan);</span><br><span class="line">		sleep (<span class="number">0.625</span> <span class="comment">/* in milliseconds */</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> *le_adv = airdrop_init_template ()</span><br><span class="line"><span class="keyword">for</span> (<span class="type">uint16_t</span> h = <span class="number">0</span>; <span class="comment">/* loop */</span>; h += <span class="number">4</span>) &#123;</span><br><span class="line">    airdrop_set_hashes (le_adv, h, h+<span class="number">1</span>, h+<span class="number">2</span>, h+<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">uint16_t</span> chan = <span class="number">37</span>; chan &lt; <span class="number">40</span>; chan++) &#123;</span><br><span class="line">        le_adv_tx (le_adv, chan);</span><br><span class="line">        sleep (<span class="number">0.625</span> <span class="comment">/* in milliseconds */</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>原论文作者最后通过实验 (假设 BLE 扫描窗口 / 持续时间为 30 ms，扫描间隔为 300 ms) 发现当通讯录中仅有 10 个人时，平均 10 秒就可以成功枚举出散列，当通讯录人数超过 100 人时仅需不到 1 秒，通讯录人数越多，暴破速度越快，此外原论文作者统计发现平均每一个用户都有超过 136 个联系人，因此该攻击方法在现实中是相当可行的。</p>
 <h1 id="用户隐私泄露"><a href="# 用户隐私泄露" class="headerlink" title="用户隐私泄露"></a>用户隐私泄露 </h1><p> 为了保护用户隐私安全，避免用户被追踪，所有的苹果设备均实现了 MAC 地址随机化，但是 AWDL 动作帧中还是包含了部分用户敏感信息。</p>
@@ -444,7 +507,8 @@
 <p>进行中间人攻击主要有三个阶段：中断发送方的设备发现服务使真正的接收方无法被发现，降级已认证链接为未认证链接，实施中间人攻击拦截并修改传输数据。</p>
 <h2 id="中断设备发现"><a href="# 中断设备发现" class="headerlink" title="中断设备发现"></a>中断设备发现 </h2><p> 首先需要防止数据的发送方发现真正的接收方，这样攻击者才可以冒充接收方拦截数据。中断设备发现可以通过前文中的去同步 DOS 攻击来实现，通过单播使目标 AWDL 节点同步失败，无法完成完整的 AirDrop 服务发现过程，真正的接收方就不会出现在发送方的 AirDrop 界面中，但是原论文作者在实验中发现在服务发现过程开始的时候发送方设备会增加信道的分配，使得两个设备之间信道的重合率上升，DOS 攻击的效果下降。可以使用一种替代方案：TCP 重置攻击，通过伪造 TCP 重置包使 RST 标志位设置为 1 来强制中断 TCP 链接。</p>
 <h2 id="降级认证链接"><a href="# 降级认证链接" class="headerlink" title="降级认证链接"></a>降级认证链接 </h2><p> 当攻击者使用自签名的证书而不是苹果的证书时，发送方会采用未认证链接，由于未认证链接仅存在与 AirDrop 允许任何人连接的模式下，若发送方设备处于仅联系人的模式，则可以使用前文中的 DOS 攻击强迫发送方切换至允许任何人连接的模式。当未认证连接成功后，经过巧妙设计的攻击者设备名就会出现在发送方的 AirDrop 界面中，但是头像却是默认头像，这对于发送方来说可能并不会注意到这个变化。</p>
-<h2 id="拦截并修改数据"><a href="# 拦截并修改数据" class="headerlink" title="拦截并修改数据"></a>拦截并修改数据 </h2><p> 当接收方通过攻击者 AirDrop 服务发现以后，就可以开始等待发送方启动 HTTPS 握手 (发送方与攻击者握手，攻击者与接收方握手，就建立了两个 TLS 链接)，当攻击者收到来自发送方 / Ask 或 / Upload 请求后即可转发给接收方，或者修改请求中的数据实现中间人攻击。原论文作者提供的攻击示意图如下。<br>![](/AWDL 协议及漏洞分析 /mitm.jpg)</p>
+<h2 id="拦截并修改数据"><a href="# 拦截并修改数据" class="headerlink" title="拦截并修改数据"></a>拦截并修改数据 </h2><p> 当接收方通过攻击者 AirDrop 服务发现以后，就可以开始等待发送方启动 HTTPS 握手 (发送方与攻击者握手，攻击者与接收方握手，就建立了两个 TLS 链接)，当攻击者收到来自发送方 / Ask 或 / Upload 请求后即可转发给接收方，或者修改请求中的数据实现中间人攻击。原论文作者提供的攻击示意图如下。</p>
+<p>![](/AWDL 协议及漏洞分析 /mitm.jpg)</p>
 <p>原论文作者提供了相应的 <a target="_blank" rel="noopener" href="https://youtu.be/5T7Qatoh0Vo">演示视频</a>。对于缓解措施，原论文作者建议苹果修改 AirDrop 的 AI 使得未认证链接设备更加醒目，此外还建议添加当设备在允许任何连接模式下经过一段超时时间后就自动将 AirDrop 调整为仅联系人的模式的设置，这样就可以有效避免未认证的链接。</p>
 
     </div>
@@ -456,6 +520,8 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Wireless/" rel="tag"># Wireless</a>
+              <a href="/tags/Apple/" rel="tag"># Apple</a>
+              <a href="/tags/SDR/" rel="tag"># SDR</a>
           </div>
 
         
@@ -545,20 +611,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -634,6 +700,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

