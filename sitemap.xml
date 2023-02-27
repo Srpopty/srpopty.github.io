@@ -525,13 +525,6 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/tags/XXE/</loc>
-    <lastmod>2023-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://srpopty.github.io/tags/RaspberryPi/</loc>
     <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -547,6 +540,13 @@
   
   <url>
     <loc>https://srpopty.github.io/tags/BruteForce/</loc>
+    <lastmod>2023-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://srpopty.github.io/tags/XXE/</loc>
     <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -576,14 +576,14 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/ComputerScience/</loc>
+    <loc>https://srpopty.github.io/categories/Vulnerability/</loc>
     <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/Vulnerability/</loc>
+    <loc>https://srpopty.github.io/categories/ComputerScience/</loc>
     <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
