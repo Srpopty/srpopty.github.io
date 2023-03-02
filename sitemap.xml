@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://srpopty.github.io/2023/03/02/Typecho-V1.2.0-Backend-Reflected-XSS-cid/</loc>
+    
+    <lastmod>2023-03-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://srpopty.github.io/2023/02/27/WordPress-V6.2-Backend-Refltecd-XSS-newcontent/</loc>
     
     <lastmod>2023-02-27</lastmod>
@@ -427,7 +436,7 @@
 
   <url>
     <loc>https://srpopty.github.io/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -435,119 +444,119 @@
   
   <url>
     <loc>https://srpopty.github.io/tags/Wireless/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/Apple/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/SDR/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/BlueWhale/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/WriteUp/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/Web/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/CVE/</loc>
-    <lastmod>2023-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://srpopty.github.io/tags/XSS/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/SQLi/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/Pwn/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://srpopty.github.io/tags/XSS/</loc>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/Think/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/SSRF/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/SocialEngineering/</loc>
-    <lastmod>2023-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://srpopty.github.io/tags/RaspberryPi/</loc>
-    <lastmod>2023-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://srpopty.github.io/tags/Kali/</loc>
-    <lastmod>2023-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://srpopty.github.io/tags/BruteForce/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/tags/XXE/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://srpopty.github.io/tags/RaspberryPi/</loc>
+    <lastmod>2023-03-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://srpopty.github.io/tags/Kali/</loc>
+    <lastmod>2023-03-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://srpopty.github.io/tags/BruteForce/</loc>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -556,63 +565,63 @@
   
   <url>
     <loc>https://srpopty.github.io/categories/Paper/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/categories/Hack/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/categories/CTF/</loc>
-    <lastmod>2023-02-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://srpopty.github.io/categories/Vulnerability/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/categories/ComputerScience/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://srpopty.github.io/categories/Vulnerability/</loc>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/categories/CheatSheet/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/categories/Life/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/categories/Geek/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://srpopty.github.io/categories/PenetrationTest/</loc>
-    <lastmod>2023-02-27</lastmod>
+    <lastmod>2023-03-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
