@@ -482,14 +482,14 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/tags/WriteUp/</loc>
+    <loc>https://srpopty.github.io/tags/BlueWhale/</loc>
     <lastmod>2023-06-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/tags/BlueWhale/</loc>
+    <loc>https://srpopty.github.io/tags/WriteUp/</loc>
     <lastmod>2023-06-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -596,14 +596,14 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/CTF/</loc>
+    <loc>https://srpopty.github.io/categories/Hack/</loc>
     <lastmod>2023-06-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/Hack/</loc>
+    <loc>https://srpopty.github.io/categories/CTF/</loc>
     <lastmod>2023-06-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
