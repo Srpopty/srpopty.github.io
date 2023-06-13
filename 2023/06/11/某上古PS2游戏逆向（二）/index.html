@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="某上古 PS2 游戏逆向（二）音频分析">
+<meta property="og:url" content="https://srpopty.github.io/2023/06/11/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="Shadow Gallery">
+<meta property="og:description" content="一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-11T06:27:12.000Z">
+<meta property="article:modified_time" content="2023-06-11T06:27:12.000Z">
+<meta property="article:author" content="Srpopty">
+<meta property="article:tag" content="ReverseEngineering">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://srpopty.github.io/2023/06/11/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>某上古 PS2 游戏逆向（二）音频分析 | Shadow Gallery</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Shadow Gallery" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shadow Gallery</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Live in the shadow</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-knowledge">
+
+    <a href="/knowledge/" rel="section"><i class="fa fa-fw fa-book"></i>知识库</a>
+
+  </li>
+        <li class="menu-item menu-item-life">
+
+    <a href="/life/" rel="section"><i class="fa fa-fw fa-rocket"></i>随想</a>
+
+  </li>
+        <li class="menu-item menu-item-ctf">
+
+    <a href="/ctf/" rel="section"><i class="fa fa-fw fa-flag"></i>ctf</a>
+
+  </li>
+        <li class="menu-item menu-item-vulnerabilities">
+
+    <a href="/vulnerabilities/" rel="section"><i class="fa fa-fw fa-eye"></i>漏洞</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://srpopty.github.io/2023/06/11/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Srpopty">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shadow Gallery">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          某上古 PS2 游戏逆向（二）音频分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-11 14:27:12" itemprop="dateCreated datePublished" datetime="2023-06-11T14:27:12+08:00">2023-06-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hack/" itemprop="url" rel="index"><span itemprop="name">Hack</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="音频文件分析"><a href="# 音频文件分析" class="headerlink" title="音频文件分析"></a>音频文件分析 </h1><p> 根据文件名猜测角色音频保存在 <code>VOICE_ID.bin</code> 中，使用 Cube Media Player2 扫描 <code>VOICE_ID.bin</code> 可以发现里面保存的是 <code>adpcm</code> 格式的原始音频数据</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% BA%8C% EF% BC%89/11.jpg)</p>
+<p>本来尝试直接利用 PSound 或者 Cube Media Player2 提取音频，自动转换到 wav 可以省很多事，但是发现这两个软件要么扫描的不全，要么扫描出来的音频是错的，所以折腾了半天，还是得自己手动提取。不过 Cube Media Player2 可以提供扫描到的音频的偏移以及长度，正好也验证了前文提取出来的文件内容是正确的。</p>
+<p>Google 了一下，adpcm 是基于 pcm 的一种有损压缩编码，可以大幅压缩 pcm 数据，通常 wav 文件中就包含了原始的 pcm 或者 adpcm 数据，因此直接将 adpcm 转换为 wav 是有可能的，不过需要知道其对应的采样率、声道等信息。当然，以上信息来自 Google，不管是中文英文，大部分都是水文或者标题党，点名批评 CSDN，大部分文章点进去发现就介绍了一下 adpcm 算法，然后就介绍 wav 文件的格式，甚至连 adpcm 的格式都说不清楚，维基百科介绍的都比文章里介绍的言简意赅，搜了一个晚上和一个下午，愣是没查出来到底怎么把 adpcm 转换为 wav。</p>
+<h1 id="AI- 的智慧"><a href="#AI- 的智慧" class="headerlink" title="AI 的智慧"></a>AI 的智慧 </h1><p> 手动将原始的 adpcm 拖到 Audacity 中使用 adpcm 格式确实可以听到一点点人声，但是噪声非常非常大。最后无奈求助人工智能，人工智能确实比网上不靠谱的文章靠谱的多，求助 bard，有了如下对话：</p>
+<hr>
+<p><strong>Srpopty</strong>: What is PS2 ADPCM Raw File?</p>
+<p><strong>Bard</strong>: A PS2 ADPCM raw file is a type of audio file that is used to store audio data on the PlayStation 2 console. The file format is based on the ADPCM (Adaptive Differential Pulse-Code Modulation) compression algorithm, which is a lossy compression format that reduces the size of the audio file by discarding some of the data.</p>
+<p>PS2 ADPCM raw files are typically stored in a .VAG file format. The file format consists of a header, which contains information about the audio data, and a data section, which contains the compressed audio data.</p>
+<p>To play back a PS2 ADPCM raw file, you will need a software application that supports the .VAG file format. Some popular software applications that support the .VAG file format include:</p>
+<ul>
+<li><strong>Audacity</strong></li>
+<li><strong>VLC Media Player</strong></li>
+<li><strong>foobar2000</strong></li>
+</ul>
+<p>Once you have a software application that supports the .VAG file format, you can open the file and play it back.</p>
+<p>Here are some of the advantages of using PS2 ADPCM raw files:</p>
+<ul>
+<li><strong>Small file size:</strong> The ADPCM compression algorithm used to create PS2 ADPCM raw files can significantly reduce the size of the audio file, making it easier to store and transfer.</li>
+<li><strong>Wide compatibility:</strong> PS2 ADPCM raw files are supported by a wide variety of software applications, making them easy to play back.</li>
+</ul>
+<p>Here are some of the disadvantages of using PS2 ADPCM raw files:</p>
+<ul>
+<li><strong>Lossy compression:</strong> The ADPCM compression algorithm used to create PS2 ADPCM raw files discards some of the data, which can result in a loss of audio quality.</li>
+<li><strong>Not suitable for all applications:</strong> PS2 ADPCM raw files are not suitable for all audio applications. For example, they are not suitable for high-fidelity audio, such as music or sound effects.</li>
+</ul>
+<p>Overall, PS2 ADPCM raw files are a convenient way to store and transfer audio data. However, it is important to be aware of the potential loss of audio quality that can occur when using this format.</p>
+<hr>
+<p>从这里可以得到一个很重要的信息 <code>PS2 ADPCM raw files are typically stored in a .VAG file format</code>，在 PS2 中音频经常使用 <code>.vag</code> 格式保存，并且还提醒我们可以用 <code>Audacity</code> 打开这种格式。</p>
+<hr>
+<p><strong>Srpopty</strong>: What is the  .VAG file format?</p>
+<p><strong>Bard</strong>: A .VAG file is a sound file format developed by Sony for use in PlayStation games. It is a compressed format that uses the Adaptive Differential Pulse-Code Modulation (ADPCM) algorithm to reduce the size of the audio data.</p>
+<p>.VAG files are typically 4-bit ADPCM, which means that each sample is represented by 4 bits of data. This results in a file size that is about one-quarter the size of a uncompressed 16-bit audio file.</p>
+<p>.VAG files are stored in a RIFF (Resource Interchange File Format) container. The RIFF header contains information about the file, such as the number of channels, the sample rate, and the bit depth. The data section contains the compressed audio data.</p>
+<p>.VAG files can be played back by software that supports the RIFF container format. Some popular software applications that can play back .VAG files include:</p>
+<ul>
+<li>Audacity</li>
+<li>VLC Media Player</li>
+<li>foobar2000</li>
+</ul>
+<p>.VAG files are a common format for storing sound effects and music in PlayStation games. They are also used in some other applications, such as video editing and audio recording.</p>
+<p>Here are some of the advantages of using .VAG files:</p>
+<ul>
+<li><strong>Small file size:</strong> The ADPCM compression algorithm used to create .VAG files can significantly reduce the size of the audio file, making it easier to store and transfer.</li>
+<li><strong>Wide compatibility:</strong> .VAG files are supported by a wide variety of software applications, making them easy to play back.</li>
+</ul>
+<p>Here are some of the disadvantages of using .VAG files:</p>
+<ul>
+<li><strong>Lossy compression:</strong> The ADPCM compression algorithm used to create .VAG files discards some of the data, which can result in a loss of audio quality.</li>
+<li><strong>Not suitable for all applications:</strong> .VAG files are not suitable for all audio applications. For example, they are not suitable for high-fidelity audio, such as music or sound effects.</li>
+</ul>
+<p>Overall, .VAG files are a convenient way to store and transfer audio data. However, it is important to be aware of the potential loss of audio quality that can occur when using this format.</p>
+<hr>
+<p>从这段对话可以知道 <code>.VAG files can be played back by software that supports the RIFF container format</code>，<code>.vag</code> 保存在 RIFF 中，但是在我们提取出的文件中并没有看到 RIFF 文件头，于是尝试将 <code>VOICE_ID</code> 中的后缀名改为 <code>.vag</code>，再用 Audacity 打开，发现 Audacity 可以正常读取，设置采样率为 <code>22050</code> 可以听到清晰的人声，而 <code>VOCIDE_ID</code> 中第一个文件的人声刚好和 PSound 提取的相同，但是 PSound 只提取出了这一段声音的后半段。</p>
+<h1 id="VAG- 文件"><a href="#VAG- 文件" class="headerlink" title="VAG 文件"></a>VAG 文件 </h1><p> 然而，尽管 ps2 使用 <code>.vag</code> 格式保存音频，但是 vag 仍然拥有固定的格式，例如在 vag2 和 vag3 的两个版本中都有不同的文件头</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">Format Specifications (version 2)</span><br><span class="line">// VAG file format</span><br><span class="line"></span><br><span class="line">//big endian </span><br><span class="line"></span><br><span class="line">//header</span><br><span class="line">4 bytes (char) - magic // &quot;VAGp&quot;</span><br><span class="line">4 bytes uint32 - format version  // &quot;2&quot;</span><br><span class="line">4 bytes (uint32) - source start offset //always &quot;0&quot;</span><br><span class="line">4 bytes (uint32) - waveform data size </span><br><span class="line">4 bytes (uint32) - sample rate (Hz)</span><br><span class="line">2 bytes (uint16) - base volume for left channel</span><br><span class="line">2 bytes (uint16) - base volume for right channel</span><br><span class="line">2 bytes (uint16) - base pitch (includes fs modulation)</span><br><span class="line">2 bytes (uint16) - base ADSR1</span><br><span class="line">2 bytes (uint16) - base ADSR2</span><br><span class="line">2 bytes (uint16) - reserved area</span><br><span class="line">16 bytes (char) - track name</span><br><span class="line"></span><br><span class="line">//data</span><br><span class="line">x bytes - waveform data (ADPCM Audio)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Format Specifications (version 3)</span><br><span class="line">// VAG file format</span><br><span class="line"></span><br><span class="line">//big endian </span><br><span class="line"></span><br><span class="line">//header</span><br><span class="line">4 bytes (char) - signature // &quot;VAGp&quot;</span><br><span class="line">4 bytes (uint32) - format version  // &quot;3&quot;</span><br><span class="line">4 bytes (uint32) - source start offset //always &quot;0&quot;</span><br><span class="line">4 bytes (uint32) - waveform data size </span><br><span class="line">4 bytes (uint32) - sample rate (Hz)</span><br><span class="line">10 bytes - reserved area</span><br><span class="line">1 byte (uint8) - number of channels  // &quot;0&quot; or &quot;1&quot; --&gt; 1 channel</span><br><span class="line">                                     // &quot;2&quot; --&gt; 2 channels</span><br><span class="line">1 byte (uint8) - reserved area</span><br><span class="line">32 bytes (char) - track name  //e.g. &quot;s11_03/MD&quot;</span><br><span class="line"></span><br><span class="line">//data</span><br><span class="line">x bytes - waveform data (ADPCM Audio)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Format Specifications (version 6)</span><br><span class="line">// VAG file format</span><br><span class="line"></span><br><span class="line">//big endian </span><br><span class="line"></span><br><span class="line">//header</span><br><span class="line">4 bytes (char) - signature // &quot;VAGp&quot;</span><br><span class="line">4 bytes (uint32) - format version  // &quot;6&quot;</span><br><span class="line">4 bytes (uint32) - reserved area</span><br><span class="line">4 bytes (uint32) - waveform data size </span><br><span class="line">4 bytes (uint32) - sample rate (Hz)</span><br><span class="line">10 bytes - reserved area</span><br><span class="line">1 byte (uint8) - number of channels  // &quot;0&quot; or &quot;1&quot; --&gt; 1 channel</span><br><span class="line">                                     // &quot;2&quot; --&gt; 2 channels</span><br><span class="line">1 byte (uint8) - reserved area</span><br><span class="line">16 bytes (char) - track name  //e.g. &quot;s11_03/MD&quot;</span><br><span class="line"></span><br><span class="line">//data</span><br><span class="line">x bytes - waveform data (ADPCM Audio)</span><br></pre></td></tr></table></figure>
+
+<p>在我们提取出的文件中并没有发现 “VAGp” 这个字符串，如下图所示 <code>VIOCE_ID.BIN</code> 的第一个文件</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% BA%8C% EF% BC%89/12.jpg)</p>
+<p>但是 Audacity 仍然可读，可以猜测我们提取出的只是裸数据，也就是 <code>waveform data</code>，仍然缺少文件头，意味着缺少例如采样率，声道数等信息，导致从 Audacity 导出时会将裸数据中的值解析为 vag 格式，例如导出为 mp3 时会警告</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% BA%8C% EF% BC%89/13.jpg)</p>
+<p>而 150999087，也就是 0x0900102f 刚好对应前面 0x10 位置处的 4 个字节，因此我们需要为裸数据填充合适的文件头。</p>
+<p>在 Audacity 中设置采样率为 22050，单声道时可以听到清晰的人声，因此确定裸数据的采样率就是 22050，声道数为 1，32 位浮点。</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% BA%8C% EF% BC%89/14.jpg)</p>
+<p>根据 Google 的 <a target="_blank" rel="noopener" href="https://www.psdevwiki.com/ps3/Multimedia_Formats_and_Tools#VAG">结果</a>，在 PS3 中使用了第六版的 VAG，因此我们先从 verison 6 开始尝试添加 vag 文件头</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">        0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F</span><br><span class="line">0000h: 56 41 47 70 00 00 00 06 00 00 00 00 00 01 07 00</span><br><span class="line">0010h: 00 00 56 22 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">0020h: 74 65 73 74 00 00 00 00 00 00 00 00 00 00 00 00</span><br></pre></td></tr></table></figure>
+
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% BA%8C% EF% BC%89/15.jpg)</p>
+<p>首先添加了 4 个字节的 “VAGp” 字符串，然后添加了 4 个字节版本号为 6，接着 4 个字节保留位，接着 4 个字节是 adpcm 裸数据的大小，接着是 4 个字节采样率，也就是 22050，之后 10 个字节保留位，接 1 个字节的声道数，也就是 0 表示单声道，接着 1 个字节保留位，最后从 0x20 开始 16 个字节填写音轨名称，大端保存。然后用 ffmpeg 转换为 wav，发现可以正常转换，播放的声音也正常</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% BA%8C% EF% BC%89/16.jpg)</p>
+<h1 id="音频修复与转换"><a href="# 音频修复与转换" class="headerlink" title="音频修复与转换"></a>音频修复与转换 </h1><p> 基于以上分析的结果，可以写一个音频修复的脚本。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- encoding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># =======================================================</span></span><br><span class="line"><span class="comment"># Author: Srpopty</span></span><br><span class="line"><span class="comment"># Email: srpopty@outlook.com</span></span><br><span class="line"><span class="comment"># FileName: vag.py</span></span><br><span class="line"><span class="comment"># Description:</span></span><br><span class="line"><span class="comment">#     Simply add a VAG6 header to raw vag data.</span></span><br><span class="line"><span class="comment"># ========================================================</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">filename</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read ()</span><br><span class="line">    filename = <span class="string">&quot;.&quot;</span>.join (filename.split (<span class="string">&quot;.&quot;</span>)[:-<span class="number">1</span>])</span><br><span class="line">    name = os.path.basename (filename)</span><br><span class="line">    name_part = name.split (<span class="string">&quot;_&quot;</span>)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename + <span class="string">&quot;.vag&quot;</span>, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write (</span><br><span class="line">            <span class="string">b&quot;\x56\x41\x47\x70&quot;</span></span><br><span class="line">            + <span class="string">b&quot;\x00\x00\x00\x06&quot;</span></span><br><span class="line">            + <span class="string">b&quot;\x00\x00\x00\x00&quot;</span></span><br><span class="line">            + struct.pack (<span class="string">&quot;&gt;I&quot;</span>, <span class="built_in">int</span>(name_part [-<span class="number">1</span>], <span class="number">16</span>))</span><br><span class="line">            + <span class="string">b&quot;\x00\x00\x56\x22&quot;</span></span><br><span class="line">            + <span class="string">b&quot;\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00&quot;</span></span><br><span class="line">            + <span class="string">&quot;_&quot;</span>.join (name_part [:-<span class="number">1</span>]).encode ().ljust (<span class="number">16</span>, <span class="string">b&quot;\x00&quot;</span>)</span><br><span class="line">            + data</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main (sys.argv [<span class="number">1</span>])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>利用 <code>xargs</code> 批量修复 <code>VOICE_ID</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> *.dat | xargs -I &#123;&#125; sh -c <span class="string">&#x27;echo &#123;&#125; &amp;&amp; python3 ./vag.py ./&#123;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>利用 <code>ffmpeg</code> 批量转换为 <code>.wavs</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> *.vag | <span class="built_in">cut</span> -d <span class="string">&#x27;.&#x27;</span> -f 1 | xargs -I &#123;&#125; ffmpeg -i &#123;&#125;.vag &#123;&#125;.wav</span><br></pre></td></tr></table></figure>
+
+<p>到此，<code>VOICE_ID</code> 分析完成，同理可以提取出 <code>SOUND_ID</code> 中的音乐，发现 <code>SOUND_ID</code> 中存储的基本都是 BGM，除此以外，在 <code>SOUND_ID</code> 中还有一部分文件保存类似偏移或者长度的数据，例如 <code>1_0_14.dat</code></p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% BA%8C% EF% BC%89/1.jpg)</p>
+<p>经过观察可以发现每隔一定数量的 BGM 就会出现一个这种文件，一共出现 36 个，该文件长度固定为 20 字节，开始为固定的 4 字节的 <code>0x00</code>，结尾为 4 字节的 <code>0x00</code> 或者 <code>0xff</code>，中间可能是小端保存的 3 个 int，例如上图中间的 <code>0xac12</code>，<code>0x01</code> 以及 <code>0x1000</code> 三个数字。此外，还有 9 个空文件，例如第一个文件 <code>0_0_0.dat</code>。该文件的作用暂时未知，不影响我们对 <code>SOUIND_ID</code> 的分析以及提取。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ReverseEngineering/" rel="tag"># ReverseEngineering</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%B8%80%EF%BC%89/" rel="prev" title="某上古 PS2 游戏逆向（一）文件提取">
+      <i class="fa fa-chevron-left"></i> 某上古 PS2 游戏逆向（一）文件提取
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">音频文件分析 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI-%20%E7%9A%84%E6%99%BA%E6%85%A7"><span class="nav-number">2.</span> <span class="nav-text">AI 的智慧 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VAG-%20%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">VAG 文件 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E4%BF%AE%E5%A4%8D%E4%B8%8E%E8%BD%AC%E6%8D%A2"><span class="nav-number">4.</span> <span class="nav-text">音频修复与转换 </span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Srpopty</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Srpopty" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Srpopty" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:srpopty@outlook.com" title="E-Mail → mailto:srpopty@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Srpopty</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fb9b672afa74e328fbe8',
+      clientSecret: '7b3efe103d7e694008b943a67e5273ad36ee14a0',
+      repo        : 'srpopty.github.io',
+      owner       : 'Srpopty',
+      admin       : ['Srpopty'],
+      id          : 'bf020b8f14c50fd0f15fb4431b30267f',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="某上古 PS2 游戏逆向（一）文件提取">
+<meta property="og:url" content="https://srpopty.github.io/2023/06/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="Shadow Gallery">
+<meta property="og:description" content="一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-10T08:53:57.000Z">
+<meta property="article:modified_time" content="2023-06-10T08:53:57.000Z">
+<meta property="article:author" content="Srpopty">
+<meta property="article:tag" content="ReverseEngineering">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://srpopty.github.io/2023/06/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>某上古 PS2 游戏逆向（一）文件提取 | Shadow Gallery</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Shadow Gallery" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shadow Gallery</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Live in the shadow</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-knowledge">
+
+    <a href="/knowledge/" rel="section"><i class="fa fa-fw fa-book"></i>知识库</a>
+
+  </li>
+        <li class="menu-item menu-item-life">
+
+    <a href="/life/" rel="section"><i class="fa fa-fw fa-rocket"></i>随想</a>
+
+  </li>
+        <li class="menu-item menu-item-ctf">
+
+    <a href="/ctf/" rel="section"><i class="fa fa-fw fa-flag"></i>ctf</a>
+
+  </li>
+        <li class="menu-item menu-item-vulnerabilities">
+
+    <a href="/vulnerabilities/" rel="section"><i class="fa fa-fw fa-eye"></i>漏洞</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://srpopty.github.io/2023/06/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Srpopty">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shadow Gallery">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          某上古 PS2 游戏逆向（一）文件提取
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-10 16:53:57" itemprop="dateCreated datePublished" datetime="2023-06-10T16:53:57+08:00">2023-06-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hack/" itemprop="url" rel="index"><span itemprop="name">Hack</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="# 前言" class="headerlink" title="前言"></a>前言 </h1><p> 最近几个月迷上了某上古动漫，希望借助 AI 技术复活动漫中的女主角。经过一番搜罗发现该动漫居然出过三款 PS2 文字冒险游戏，为了方便收集训练数据，需要从这三个 PS2 游戏中提取一些资源。然而毕竟是上古动漫，而且从来没接触过 PS2 的逆向，本文记录了一个 Web 狗针对一个上古 PS2 游戏的逆向全过程。</p>
+<p>作为一个上古时期的动漫，第一款 PS2 游戏发售的时候北京奥运会都还没举行，因此在这个年代找到这三款上古游戏的资源确实是不容易，不过最终经过三天的努力，借助 Google Hacking 以及其他 Web 手段下载了这三款 <font style="color: black;background: black;">~~ 盗版～～</font> 游戏。</p>
+<p>PS2（Sony PlayStation2）是一款非常古老的游戏主机，在现代 Mac 系统上使用 <a target="_blank" rel="noopener" href="https://pcsx2.net/">PCSX2 模拟器</a> 运行 PS2 游戏的效果还不错，不过需要下载 BIOS，当然，借助 Google Hacking 还是比较容易找到这些 PS2 的 BIOS，包括欧版，日版，美版等。</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/1.jpg)</p>
+<p>逆向之前先试着玩了玩，确定三个游戏都可以正常运行，可惜都是日文，年代太久远了没有任何汉化，文字冒险游戏只看日文也确实玩不明白，只能听个响看个图，外网搜索了很久也几乎没人关注这个游戏的逆向，因此一切都需要从头开始。本文工作量较大，内容较多，将分为多个部分记录。</p>
+<h1 id="目录结构与文件分析"><a href="# 目录结构与文件分析" class="headerlink" title="目录结构与文件分析"></a>目录结构与文件分析 </h1><p> 下载好的游戏都是常见的游戏光盘 iso 格式，直接打开 iso 就可以看到里面的目录。由于三个游戏都是同一家厂商开发，因此本文主要以其中一个游戏进行逆向。游戏本身 1.9G 左右，打开 iso 光盘里面的目录结构如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/Users/srpopty/Desktop/xxxx</span><br><span class="line">├── IOP</span><br><span class="line">│   ├── CDVDSTM.IRX</span><br><span class="line">│   ├── DBCMAN.IRX</span><br><span class="line">│   ├── DS2U_D.IRX</span><br><span class="line">│   ├── IOPRP310.IMG</span><br><span class="line">│   ├── LIBSD.IRX</span><br><span class="line">│   ├── MC2_D.IRX</span><br><span class="line">│   ├── MODHSYN.IRX</span><br><span class="line">│   ├── MODMIDI.IRX</span><br><span class="line">│   ├── SDRDRV.IRX</span><br><span class="line">│   ├── SIO2D.IRX</span><br><span class="line">│   ├── SIO2MAN.IRX</span><br><span class="line">│   ├── SKHSYNTH.IRX</span><br><span class="line">│   ├── SKMIDI.IRX</span><br><span class="line">│   ├── SKSOUND.IRX</span><br><span class="line">│   └── USBD.IRX</span><br><span class="line">├── MOVIE</span><br><span class="line">│   ├── MMVLOGO.PSS</span><br><span class="line">│   ├── WARP.PSS</span><br><span class="line">│   ├── ZERO3ED.PSS</span><br><span class="line">│   └── ZERO3OP.PSS</span><br><span class="line">├── NORMAL.BIN</span><br><span class="line">├── NORMAL.HD</span><br><span class="line">├── SCENEDAT.BIN</span><br><span class="line">├── SCENEDAT.HD</span><br><span class="line">├── SCENE_ID.BIN</span><br><span class="line">├── SCENE_ID.HD</span><br><span class="line">├── SLPS_258.97</span><br><span class="line">├── SOUND_ID.BIN</span><br><span class="line">├── SOUND_ID.HD</span><br><span class="line">├── SYSTEM.BIN</span><br><span class="line">├── SYSTEM.CNF</span><br><span class="line">├── SYSTEM.HD</span><br><span class="line">├── VOICE_ID.BIN</span><br><span class="line">└── VOICE_ID.HD</span><br><span class="line"></span><br><span class="line">3 directories, 33 files</span><br></pre></td></tr></table></figure>
+
+<p>大概了解一些 PS2 的开发基础，相较于现代游戏主机，PS2 的开发较为自由，换句话说就是不太规范，各种文件、脚本、字节码这些格式开发者甚至可以自己定义。</p>
+<p>首先在 CD 根目录中，<code>SLPS_xxx.xx</code> 一般作为游戏主程序，也就是主要入口，游戏运行时首先执行的就是就是这个程序，从 <code>SYSTEM.CNF</code> 中也能看到这个信息，<code>file</code> 一下也可以看到是 32 位的 mips，静态链接，无符号表，可以用 IDA 反汇编，或者直接用 Ghidra 反编译。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ELF 32-bit LSB executable, MIPS, MIPS-III version 1 (SYSV), statically linked, stripped</span><br></pre></td></tr></table></figure>
+
+<p>此外还可以看到两个目录 <code>IOP</code> 和 <code>MOVIE</code>。在 PS2 中，<code>IOP</code> 类似 Windows 的 <code>.dll</code> 以及 Unix 的 <code>.so</code>，属于动态链接库，<code>file</code> 一下目录中的 <code>.IRX</code> 文件也可以看到是和 <code>SLPS_xxx.xx</code> 一样的 MIPS ELF，但是单靠文件名暂时不好判断其功能。而在 <code>MOIVE</code> 中的 <code>.PSS</code> 是一种视频文件格式，可以直接用 VLC 播放，但是没有声音，包括了厂商 logo、开头的 OP、结束的 ED 以及一个 <code>WARP</code> 视频。</p>
+<p>之后在 CD 根目录下可以看到很多同名的 <code>.BIN</code> 和 <code>.HD</code> 文件，包括 <code>NORMAL</code>，<code>SCENE_ID</code>，<code>SCENEDAT</code>，<code>SOUND_ID</code>，<code>VOICE_ID</code> 以及 <code>SYSTEM</code>，用 <code>file</code> 或者 <code>binwalk</code> 也查不出来是什么类型的文件。</p>
+<p>通过分析 <code>.BIN</code> 文件和 <code>.HD</code> 文件的大小（如下表所示），推测 <code>.HD</code> 与 <code>.BIN</code> 存在对应关系，<code>.BIN</code> 可能是多个文件打包，而 <code>.HD</code> 则存储了映射关系。</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>NORMAL</th>
+<th>SCENE_ID</th>
+<th>SCENEDAT</th>
+<th>SOUND_ID</th>
+<th>VOICE_ID</th>
+<th>SYSTEM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>.BIN</td>
+<td>12 MB</td>
+<td>7.4b MB</td>
+<td>171 MB</td>
+<td>363 MB</td>
+<td>1.2 GB</td>
+<td>906 KB</td>
+</tr>
+<tr>
+<td>.HD</td>
+<td>2.6 KB</td>
+<td>2.3 KB</td>
+<td>8.4 KB</td>
+<td>724 B</td>
+<td>83 KB</td>
+<td>168 B</td>
+</tr>
+</tbody></table>
+<p>首先根据文件名以及对应的文件大小可以大致猜出，<code>SCENEDAT</code> 中保存的可能是各种场景资源，例如贴图，<code>SOUND_ID</code> 中保存的是音效，而最大的 <code>VOICE_ID</code> 中保存的可能就是角色的语音。</p>
+<p>本文的最终目标是提取出角色声音，也就是 <code>VOICE_ID</code> 中的音频以及对应的文本作为训练数据。</p>
+<h1 id="BIN- 文件提取"><a href="#BIN- 文件提取" class="headerlink" title="BIN 文件提取"></a>BIN 文件提取 </h1><p> 既然 <code>.HD</code> 和 <code>.BIN</code> 是存在对应关系，那么首先要想办法利用 <code>.HD</code> 从 <code>.BIN</code> 中提取文件。首先以最小的 <code>SYSTEM</code> 为例，用 010 Editor 查看可以看到 <code>SYSTEM.BIN</code> 中保存了类似代码的明文数据</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/2.jpg)</p>
+<p>并且每隔一段距离就会出现大量的 <code>0xff</code>，类似分隔符</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/3.jpg)</p>
+<p>虽然可以看到类似代码的明文，但是其中也夹杂了很多不可见字符，此外明文中也可以看到很多 for、if 这种语法结构，因此不可能是某种语言的字节码，那么直接用文本模式打开 <code>SYSTEM</code> 可以看到不可见字符全部出现在了类似 C 风格的注释中。</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/4.jpg)</p>
+<p>考虑到这是个日本发行商的游戏，因此猜测可能是日文注释，重新用日文编码 <code>Shift JIS</code> 打开文件可以看到正常的文件内容，果然是用日语写注释。。。</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/5.jpg)</p>
+<p>尽管目前可以看到某种类似脚本语言的明文代码，但是每隔一段代码都会出现大量的 <code>0xff</code></p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/6.jpg)</p>
+<p>同时打开其他几个 <code>.BIN</code> 文件，也可以看到每隔一段就会出现大量的 <code>0xff</code>，并且出现的数量并不确定，但是总是会填充到整数后出现其他内容，推测 <code>0xff</code> 可能用于填充对其并分割不同文件，例如下图中 <code>SYSTEM.BIN</code> 的第一段代码被 <code>0xff</code> 填充并对齐到了 0x1800，作为一个 chunk</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/7.jpg)</p>
+<p>继续向后分析几段，可以发现每一个 chunk 的大小都是不同的，但都是整数，其实分析到这里基本可以确定大量的 <code>0xff</code> 的作用就是分隔文件内容，但是至于为什么要填充到某个具体的整数，原因未知，例如 <code>SYSTEM.BIN</code> 第一个 chunk 为什么填充到 0x1800 而不是 0x1700。</p>
+<p>继续分析 <code>SYSTEM.HD</code> 中的内容</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/8.jpg)</p>
+<p>第一眼就可以看到大量的 <code>00 00</code>，少部分的 <code>01 00</code>，根据经验推测很有可能是小端存储的 int，每 4 个字节作为一个数字，查看其他几个 <code>.HD</code> 文件也可以看出 <code>.HD</code> 文件大小一定是 4 的倍数。但是每个 int 并没有什么规律，有大有小，也没有经过排序。</p>
+<p>根据以往的逆向经历，例如对阴阳师 <code>.npk</code> 的逆向，通过头表（Header Table）中存储的偏移 offset 和文件长度 length 这两个值就可以从打包存储的数据中提取指定位置的文件，因此这个 int 一定是 offset 或者 length 之一，才会与 <code>.BIN</code> 相对应。假如 int 表示的是 offset，存储偏移的表通常是有顺序的，并且偏移一定是唯一的，而在某些 <code>.HD</code> 文件中出现了重复的值，因此这里的 int 一定不是偏移，怀疑可能是 length。</p>
+<p>根据前文的结论，<code>.BIN</code> 的一个 chunk 前一部分保存了文件内容，后一部分保存 <code>0xff</code> 用于对齐分隔，假设 <code>.HD</code> 中第一个值 0x131e 对应的是 <code>.BIN</code> 中的第一个文件内容的长度而不是 chunk 的长度，验证一下</p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/9.jpg)</p>
+<p><code>SYSTEM.BIN</code> 中第一个文件内容长度刚好是 0x131e，对应 <code>SYSTEM.HD</code> 的第一个小端 int <code>1E 13 00 00</code>，再验证一下下一个 chunk 刚好也是 0x15e4，对应 <code>SYSTEM.HD</code> 的第二个小端 int <code>E4 15 00 00</code></p>
+<p>![Not Found](./% E6%9F%90% E4% B8%8A% E5%8F% A4PS2% E6% B8% B8% E6%88%8F% E9%80%86% E5%90%91% EF% BC%88% E4% B8%80% EF% BC%89/10.jpg)</p>
+<p>验证其他几个 <code>.BIN</code> 和 <code>.HD</code> 也可以得到同样的结论。到此，基本就可以确定 <code>.HD</code> 中保存的就是 <code>.BIN</code> 中每个文件内容的长度，并且每个文件内容后会被填充大量的 <code>0xff</code> 分隔同时对其到某个整数。那么基于此，可以写出对应的提取脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- encoding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># =======================================================</span></span><br><span class="line"><span class="comment"># Author: Srpopty</span></span><br><span class="line"><span class="comment"># Email: srpopty@outlook.com</span></span><br><span class="line"><span class="comment"># FileName: extract.py</span></span><br><span class="line"><span class="comment"># Description:</span></span><br><span class="line"><span class="comment">#     Extract files from .BIN by .HD in some ps2 games.</span></span><br><span class="line"><span class="comment"># ========================================================</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">name, ext=<span class="string">&quot;dat&quot;</span></span>):</span><br><span class="line">    output_dir = <span class="string">&quot;./&quot;</span> + name + <span class="string">&quot;_extracted&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists (output_dir):</span><br><span class="line">        os.mkdir (output_dir)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Extracting &quot;% s&quot; to &quot;% s&quot;...&#x27;</span> % (name, output_dir))</span><br><span class="line"></span><br><span class="line">    hd_file = name + <span class="string">&quot;.HD&quot;</span></span><br><span class="line">    hd_filesize = os.path.getsize (hd_file)</span><br><span class="line">    hd_file = <span class="built_in">open</span>(hd_file, <span class="string">&quot;rb&quot;</span>)</span><br><span class="line"></span><br><span class="line">    bin_file = name + <span class="string">&quot;.BIN&quot;</span></span><br><span class="line">    bin_filesize = os.path.getsize (bin_file)</span><br><span class="line">    bin_file = <span class="built_in">open</span>(bin_file, <span class="string">&quot;rb&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> hd_filesize % <span class="number">4</span> != <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;  Invalid head file size: &quot;</span> + <span class="built_in">hex</span>(hd_filesize))</span><br><span class="line">        bin_file.close ()</span><br><span class="line">        hd_file.close ()</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;  Head file size: &quot;</span> + <span class="built_in">hex</span>(hd_filesize))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;  Bin file size: &quot;</span> + <span class="built_in">hex</span>(bin_filesize))</span><br><span class="line"></span><br><span class="line">    file_count = hd_filesize &gt;&gt; <span class="number">2</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;  Total % d files to be extracted.&quot;</span> % file_count)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(file_count):</span><br><span class="line">        filesize = struct.unpack (<span class="string">&quot;&lt;i&quot;</span>, hd_file.read (<span class="number">4</span>))[<span class="number">0</span>]</span><br><span class="line">        filename = os.path.join (</span><br><span class="line">            output_dir,</span><br><span class="line">            <span class="string">&quot;% d_% s_% s.% s&quot;</span> % (i, <span class="built_in">hex</span>(bin_file.tell ())[<span class="number">2</span>:], <span class="built_in">hex</span>(filesize)[<span class="number">2</span>:], ext),</span><br><span class="line">        )</span><br><span class="line">        data = bin_file.read (filesize)</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write (data)</span><br><span class="line"></span><br><span class="line">        chunk_size = filesize</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            data = bin_file.read (<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> data == <span class="string">b&quot;&quot;</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> data != <span class="string">b&quot;\xff&quot;</span>:</span><br><span class="line">                bin_file.seek (-<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            chunk_size += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(</span><br><span class="line">            <span class="string">&#x27;    [% d] Extracted file to &quot;% s&quot; with filesize % s in chunk size % s&#x27;</span></span><br><span class="line">            % (i, filename, <span class="built_in">hex</span>(filesize), <span class="built_in">hex</span>(chunk_size))</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> bin_file.tell () != bin_filesize:</span><br><span class="line">        <span class="built_in">print</span>(</span><br><span class="line">            <span class="string">&quot;  Bin file not finished! Current offset in % s but filesize is % s!&quot;</span></span><br><span class="line">            % (<span class="built_in">hex</span>(bin_file.tell ()), <span class="built_in">hex</span>(bin_filesize))</span><br><span class="line">        )</span><br><span class="line">    bin_file.close ()</span><br><span class="line">    hd_file.close ()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) == <span class="number">3</span>:</span><br><span class="line">        main (sys.argv [<span class="number">1</span>], sys.argv [<span class="number">2</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        main (sys.argv [<span class="number">1</span>])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在 CD 根目录执行脚本 <code>python extract.py &lt;name&gt; [ext=dat]</code>，例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python extract.py SYSTEM</span><br></pre></td></tr></table></figure>
+
+<p>同时可以指定提取出的文件后缀，默认是 <code>.dat</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python extract.py SYSTEM py</span><br></pre></td></tr></table></figure>
+
+<p>提取出的文件后保存在 <code>&lt;name&gt;_extracted</code> 目录中，例如 <code>SYSTEM_extracted</code>，文件名为 <code>id_offset_length.ext</code>，其中 <code>id</code> 为文件序号，按照文件出现的顺序从 0 开始，<code>offset</code> 为文件在 <code>.BIN</code> 中的偏移，<code>length</code> 为 <code>.HD</code> 中保存的文件内容大小。</p>
+<p>最后按顺序提取出 <code>NORMAL.BIN</code>，<code>SCENE_ID.BIN</code>，<code>SCENEDAT.BIN</code>，<code>SOUND_ID.BIN</code>，<code>SYSTEM.BIN</code> 以及 <code>VOICE_ID.BIN</code> 中的所有文件。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ReverseEngineering/" rel="tag"># ReverseEngineering</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/02/Typecho-V1.2.0-Backend-Reflected-XSS-cid/" rel="prev" title="Typecho V1.2.0 Backend Reflected XSS">
+      <i class="fa fa-chevron-left"></i> Typecho V1.2.0 Backend Reflected XSS
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/06/11/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="某上古 PS2 游戏逆向（二）音频分析">
+      某上古 PS2 游戏逆向（二）音频分析 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%B8%8E%E6%96%87%E4%BB%B6%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">目录结构与文件分析 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BIN-%20%E6%96%87%E4%BB%B6%E6%8F%90%E5%8F%96"><span class="nav-number">3.</span> <span class="nav-text">BIN 文件提取 </span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Srpopty</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Srpopty" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Srpopty" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:srpopty@outlook.com" title="E-Mail → mailto:srpopty@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Srpopty</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fb9b672afa74e328fbe8',
+      clientSecret: '7b3efe103d7e694008b943a67e5273ad36ee14a0',
+      repo        : 'srpopty.github.io',
+      owner       : 'Srpopty',
+      admin       : ['Srpopty'],
+      id          : '7ef6e5d756671220cc7cad92c57e1799',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
