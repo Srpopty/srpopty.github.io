@@ -545,6 +545,13 @@
   </url>
   
   <url>
+    <loc>https://srpopty.github.io/tags/SocialEngineering/</loc>
+    <lastmod>2023-06-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://srpopty.github.io/tags/XXE/</loc>
     <lastmod>2023-06-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -574,13 +581,6 @@
   
   <url>
     <loc>https://srpopty.github.io/tags/BruteForce/</loc>
-    <lastmod>2023-06-13</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://srpopty.github.io/tags/SocialEngineering/</loc>
     <lastmod>2023-06-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
