@@ -584,6 +584,13 @@
   </url>
   
   <url>
+    <loc>https://srpopty.github.io/tags/BruteForce/</loc>
+    <lastmod>2024-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://srpopty.github.io/tags/RaspberryPi/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -592,13 +599,6 @@
   
   <url>
     <loc>https://srpopty.github.io/tags/Kali/</loc>
-    <lastmod>2024-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://srpopty.github.io/tags/BruteForce/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -656,14 +656,14 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/Geek/</loc>
+    <loc>https://srpopty.github.io/categories/PenetrationTest/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/PenetrationTest/</loc>
+    <loc>https://srpopty.github.io/categories/Geek/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
