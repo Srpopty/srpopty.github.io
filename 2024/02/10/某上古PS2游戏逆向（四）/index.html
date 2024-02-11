@@ -367,6 +367,9 @@
 
 <p>果然，我们前面的推理没错，<code>unknown</code> 确实作为一个常量参与解压计算，<code>FUN_00116348</code> 会基于 <code>unknown</code> 对 <code>decompress</code> 的结果进行新一轮解压，当 <code>unknown</code> 取值为 1 时，这个函数原封不动的复制 <code>buf</code> 到 <code>result</code> 中，这就是为什么老哥逆出来的解压算法只能成功解压 <code>unknown</code> 为 1 的文件。</p>
 <p>最终，基于 <code>FUN_00116348</code> 的逆向结果，重新解压 <code>NORMAL</code> 的第 10 个文件 <code>SCENE_ID.LST</code>，这次解压出了正确的结果。</p>
+<blockquote>
+<p>此外，通过逆向可以发现，前文中发现 .BIN 中每个文件之间总是间隔大量 \xff 只是为了将文件对其到 0x800，便于寻址。</p>
+</blockquote>
 <p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/6.jpg" alt="SCENE_ID.LSTs"></p>
 
     </div>

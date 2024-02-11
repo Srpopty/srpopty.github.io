@@ -479,6 +479,13 @@
 
   
   <url>
+    <loc>https://srpopty.github.io/tags/BlueWhale/</loc>
+    <lastmod>2024-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://srpopty.github.io/tags/Wireless/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -494,13 +501,6 @@
   
   <url>
     <loc>https://srpopty.github.io/tags/SDR/</loc>
-    <lastmod>2024-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://srpopty.github.io/tags/BlueWhale/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -542,13 +542,6 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/tags/Pwn/</loc>
-    <lastmod>2024-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://srpopty.github.io/tags/Think/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -556,7 +549,7 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/tags/SSRF/</loc>
+    <loc>https://srpopty.github.io/tags/Pwn/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -564,6 +557,13 @@
   
   <url>
     <loc>https://srpopty.github.io/tags/SocialEngineering/</loc>
+    <lastmod>2024-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://srpopty.github.io/tags/SSRF/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -584,13 +584,6 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/tags/BruteForce/</loc>
-    <lastmod>2024-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://srpopty.github.io/tags/RaspberryPi/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -604,17 +597,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://srpopty.github.io/tags/BruteForce/</loc>
+    <lastmod>2024-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
-    <loc>https://srpopty.github.io/categories/Paper/</loc>
+    <loc>https://srpopty.github.io/categories/Hack/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/Hack/</loc>
+    <loc>https://srpopty.github.io/categories/Paper/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -642,13 +642,6 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/CheatSheet/</loc>
-    <lastmod>2024-02-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://srpopty.github.io/categories/Life/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -656,7 +649,7 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/categories/PenetrationTest/</loc>
+    <loc>https://srpopty.github.io/categories/CheatSheet/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -664,6 +657,13 @@
   
   <url>
     <loc>https://srpopty.github.io/categories/Geek/</loc>
+    <lastmod>2024-02-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://srpopty.github.io/categories/PenetrationTest/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
