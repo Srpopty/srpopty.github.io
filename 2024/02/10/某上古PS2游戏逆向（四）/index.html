@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"srpopty.github.io","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="某上古 PS2 游戏逆向（四）文件格式分析与逆向">
+<meta property="og:url" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
+<meta property="og:site_name" content="Shadow Gallery">
+<meta property="og:description" content="一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/1.jpg">
+<meta property="og:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/2.jpg">
+<meta property="og:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/3.bmp">
+<meta property="og:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/4.jpg">
+<meta property="og:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/5.jpg">
+<meta property="og:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/25.jpg">
+<meta property="og:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/26.jpg">
+<meta property="og:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/6.jpg">
+<meta property="article:published_time" content="2024-02-10T09:33:52.000Z">
+<meta property="article:modified_time" content="2024-02-10T09:33:52.000Z">
+<meta property="article:author" content="Srpopty">
+<meta property="article:tag" content="ReverseEngineering">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/1.jpg">
+
+<link rel="canonical" href="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>某上古 PS2 游戏逆向（四）文件格式分析与逆向 | Shadow Gallery</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Shadow Gallery" type="application/atom+xml"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shadow Gallery</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Live in the shadow</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-knowledge">
+
+    <a href="/knowledge/" rel="section"><i class="fa fa-fw fa-book"></i>知识库</a>
+
+  </li>
+        <li class="menu-item menu-item-life">
+
+    <a href="/life/" rel="section"><i class="fa fa-fw fa-rocket"></i>随想</a>
+
+  </li>
+        <li class="menu-item menu-item-ctf">
+
+    <a href="/ctf/" rel="section"><i class="fa fa-fw fa-flag"></i>ctf</a>
+
+  </li>
+        <li class="menu-item menu-item-vulnerabilities">
+
+    <a href="/vulnerabilities/" rel="section"><i class="fa fa-fw fa-eye"></i>漏洞</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>站点地图</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="search-pop-overlay">
+  <div class="popup search-popup">
+      <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+  </div>
+</div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://srpopty.github.io/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Srpopty">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shadow Gallery">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          某上古 PS2 游戏逆向（四）文件格式分析与逆向
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-02-10 17:33:52" itemprop="dateCreated datePublished" datetime="2024-02-10T17:33:52+08:00">2024-02-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hack/" itemprop="url" rel="index"><span itemprop="name">Hack</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">一个Web狗针对某上古时期的PlayStation2游戏的逆向以及资源提取记录。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="文件结构分析"><a href="# 文件结构分析" class="headerlink" title="文件结构分析"></a>文件结构分析 </h1><p><a href="https://srpopty.github.io/2023/06/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%B8%80%EF%BC%89/"> 前文 </a> 中通过简单地观察 <code>.HD</code> 和 <code>.BIN</code> 的对应关系以及大量的 <code>\xFF</code> 分隔符，实现了文件的初步提取，但是 <code>NORMAL</code>、<code>SCENE_ID</code>、<code>SCENEDAT</code>、<code>SYSTEM</code>、<code>VOICE_ID</code> 六个 <code>.BIN</code> 中，我们仅成功恢复了明文保存的 <code>SYSTEM</code> 以及 ADPCM 的 <code>VOICE_ID</code>，其余 4 个文件格式仍然未知。</p>
+<p>我们首先从文件较小的 <code>NORMAL</code> 开始分析。多分析几个文件可以发现比较明显的特征：首先文件开头 4 个字节是一个 int 数字，根据分析 <code>.HD</code> 中的经验，推测可能是文件大小，但是这个数字总是比我们提取出的文件的文件大小要大。接着 4 个字节取值为 1、2、3、4、5、6、7、8、9、10，推测是一个标识位，之后一个字节是非 ASCII 字节。从第 10 个字节开始是文件的正文。</p>
+<p>在第 9 个文件中发现了大量明文，看起来是一个结构类似 ini 的配置文件，而且根据内容判断是 <code>SYSTEM</code> 中每个 nut 文件的名字，但是其中仍然包含了不属于明文的字节。</p>
+<p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/1.jpg" alt="Not Found"></p>
+<p>同样在 <code>NORMAL</code> 的第 13 个文件中也发现了应该保存 <code>NORMAL</code> 中的文件名的文件，那么首先可以确定这两个文件一定是以明文保存的文件。</p>
+<p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/2.jpg" alt="Not Found"></p>
+<p>分析文件内容可以发现，大部分非 ASCII 字节连续序列以 <code>\xFF</code> 结尾，并且结合字节序列前后文本可以推测该文件被某种加密算法压缩，以及文件开头 4 个字节的 int 是文件压缩前大小。</p>
+<p>将各种已知压缩算法均尝试了一遍以后，发现这是游戏作者自己实现的压缩技术。懒得逆程序，Google 了一下，发现有人也在逆向这个游戏，但是同样被这个 16 年前的压缩技术所困惑。<a target="_blank" rel="noopener" href="https://www.vg-resource.com/thread-42169.html">帖子 </a> 里有两个老哥通过逆向游戏主程序，找到了解压缩函数，并且提取出了算法。</p>
+<p>首先第一个老哥 <code>Raccoon Sam</code> 给出了自己的理解：</p>
+<blockquote>
+<p>Hey there!<br>Bad news – I really can’t wrap my head around it, I’m afraid :C</p>
+<p>I’ve got samples for a compressed TIM2 file (“paktim” is just my nomenclature) extracted from the SCENEDAT and a legitimate, uncompressed counterpart TIM2 for it extracted from your save state. You can download them &gt; here.</p>
+<p>The first eight bytes in the paktim are a header; 40 64 04 00 01 00 00 00 which should be read as two words, 00046440 00000001 which in turn just define the uncompressed size (0x46440 or 287808 bytes, which unsurprisingly is the file size of the legitimate TIM2 file) and the amount of files in the entry (1, which &gt; unsurprisingly is the … uh, amount of files)</p>
+<p>After that, you read a byte as the variable instruction.<br>Logical AND instruction with 0x1F and add 2 to it to get the variable amount.<br>Shift instruction right five times to get the variable method.</p>
+<p>According to the method and amount, read bytes from the bytestream:<br>Method 7 is just “read amount bytes and write them to output”.<br>Method 6 is “read 1 byte as surrogate and then repeat that byte exactly amount times to the output”.<br>Method 0 is “repeat FF exactly amount times to the output”.</p>
+<p>The other methods are…. yeah, I dunno. Some methods look like they make sense but then the same method used later in the file does something completely different. I really can’t figure out what the trick here &gt; is. Really hope someone else takes a look at this, it’s driving me nuts!!</p>
+</blockquote>
+<p>文件开头 4 个字节的确是未压缩大小，之后 4 个字节帖子里的老哥认为是文件数量（不过这个并不是文件数量），之后读取 1 个字节作为 <code>instruction</code>，并进行 2 个运算得到 2 个变量：</p>
+<ol>
+<li><code>instruction &amp; 0x1f + 2</code> 可以得到 <code>amount</code> 变量。</li>
+<li><code>instruction &gt;&gt; 5</code> 可以得到 <code>method</code> 变量。</li>
+</ol>
+<p>如果 <code>method</code> 是 7，则读取接下来 <code>amount</code> 个字节作为输出。</p>
+<p>如果 <code>method</code> 是 6，则读取下一个字节并且重复 <code>amount</code> 次作为输出。</p>
+<p>如果 <code>method</code> 是 0，则重复 <code>\xff</code> 字节 <code>amount</code> 次作为输出。</p>
+<p>不过这哥们道行还是有点浅，并没有逆完整，所以这个并不是最终的解压算法，就在这哥们放弃以后，有一个老哥 <code>rufaswan</code> 觉得很有意思，并且接着逆出了“看似“完整的解压算法：</p>
+<blockquote>
+<p>I can see why this game trip you up. I don’t think I saw this kind of compression algorithm before. But I have a good understanding of it now.</p>
+<p>Let’s use an example for a start, you want to duplicate 0xC9 for 0x40 times. First you use method 6 for 0x1f+2 bytes, so you’ll get “DF C9”. For the remaining 0x1f bytes, you repeat the last command, or method 0, but with length 0x1d+2 instead, so you’ll get “1D”.</p>
+<p>Hence, the compressed data to duplicate 0xC9 for 0x40 times is “DF C9 1D”.</p>
+<p>And the game keep the last 6 commands as history, or method 0 to 5.</p>
+</blockquote>
+<p>首先文件开始的 8 个字节就像上一个老哥逆的一样，是文件大小和文件数量（实际并不是文件数量），之后读取一个字节 <code>BYTE</code>，计算出 2 个变量：</p>
+<ol>
+<li><code>BYTE &amp; 0x1f</code> 可以得到 <code>LEN</code> 变量</li>
+<li><code>BYTE &gt;&gt; 5</code> 可以得到 <code>METHOD</code> 变量</li>
+</ol>
+<p>如果 <code>METHOD</code> 是 7，则读取接下来 <code>LEN + 1</code> 个字节作为输出。</p>
+<p>如果 <code>METHOD</code> 是 6，则读取下一个字节并且重复 <code>LEN + 2</code> 次作为输出。</p>
+<p>在上述操作完成后，将其作为 <code>current</code> 放入 <code>HISTORY</code> 队列末尾：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HISTORY[<span class="number">5</span>] = HISTORY[<span class="number">4</span>]</span><br><span class="line">HISTORY[<span class="number">4</span>] = HISTORY[<span class="number">3</span>]</span><br><span class="line">HISTORY[<span class="number">3</span>] = HISTORY[<span class="number">2</span>]</span><br><span class="line">HISTORY[<span class="number">2</span>] = HISTORY[<span class="number">1</span>]</span><br><span class="line">HISTORY[<span class="number">1</span>] = HISTORY[<span class="number">0</span>]</span><br><span class="line">HISTORY[<span class="number">0</span>] = current</span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>METHOD</code> 在 <code>[0,5]</code> 之间，则作为 <code>current</code> 并且重新整理在<code>HISTORY</code> 中 <code>METHOD</code> 之前的所有元素，例如当 <code>METHOD</code> 是 3 时，则：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HISTORY[<span class="number">5</span>] <span class="comment">// do nothing</span></span><br><span class="line">HISTORY[<span class="number">4</span>] <span class="comment">// do nothing</span></span><br><span class="line">current = HISTORY[<span class="number">3</span>]</span><br><span class="line">HISTORY[<span class="number">3</span>] = HISTORY[<span class="number">2</span>] <span class="comment">// re-queue</span></span><br><span class="line">HISTORY[<span class="number">2</span>] = HISTORY[<span class="number">1</span>] <span class="comment">// re-queue</span></span><br><span class="line">HISTORY[<span class="number">1</span>] = HISTORY[<span class="number">0</span>] <span class="comment">// re-queue</span></span><br><span class="line">HISTORY[<span class="number">0</span>] = current <span class="comment">// re-queue</span></span><br></pre></td></tr></table></figure>
+
+<p>如果连续的 <code>METHOD</code> 是 6，则重复下一个字节 <code>LEN + 2</code> 次作为输出。</p>
+<p>如果连续的 <code>METHOD</code> 是 7，则从 <code>LEN</code> 中提取 2 个变量：</p>
+<ol>
+<li><code>LEN &amp; 3</code> 得到变量 <code>SUB_LEN</code></li>
+<li><code>LEN &gt;&gt; 2</code> 得到变量 <code>SUB_POS</code></li>
+</ol>
+<p>之后从 <code>SUB_POS</code> 开始读取 <code>SUB_LEN + 1</code> 个字节作为输出。</p>
+<p>最后这个老哥给了他对应的 PHP <a target="_blank" rel="noopener" href="https://github.com/rufaswan/Web2D_Games/blob/master/tools/psxtools/ps2_zero_hd-bin.php">代码</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">update_dict</span>(<span class="params"> &amp;<span class="variable">$dict</span>, <span class="variable">$lv</span>, &amp;<span class="variable">$e</span> </span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$lv</span> &gt;= <span class="number">5</span> )  <span class="variable">$dict</span>[<span class="number">5</span>] = <span class="variable">$dict</span>[<span class="number">4</span>]; <span class="comment">// -69c0</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$lv</span> &gt;= <span class="number">4</span> )  <span class="variable">$dict</span>[<span class="number">4</span>] = <span class="variable">$dict</span>[<span class="number">3</span>]; <span class="comment">// -69c4</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$lv</span> &gt;= <span class="number">3</span> )  <span class="variable">$dict</span>[<span class="number">3</span>] = <span class="variable">$dict</span>[<span class="number">2</span>]; <span class="comment">// -69c8</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$lv</span> &gt;= <span class="number">2</span> )  <span class="variable">$dict</span>[<span class="number">2</span>] = <span class="variable">$dict</span>[<span class="number">1</span>]; <span class="comment">// -69cc</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$lv</span> &gt;= <span class="number">1</span> )  <span class="variable">$dict</span>[<span class="number">1</span>] = <span class="variable">$dict</span>[<span class="number">0</span>]; <span class="comment">// -69d0</span></span><br><span class="line">    <span class="variable">$dict</span>[<span class="number">0</span>] = <span class="variable">$e</span>; <span class="comment">// -69d4</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">zero_decode</span>(<span class="params"> &amp;<span class="variable">$file</span>, <span class="variable">$siz</span> </span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable">$dec</span> = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="title function_ invoke__">trace</span>(<span class="string">&quot;== begin sub_116048\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$dict</span> = <span class="keyword">array</span>(</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>, ZERO),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>, ZERO),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>, ZERO),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>, ZERO),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>, ZERO),</span><br><span class="line">        <span class="keyword">array</span>(<span class="number">6</span>, ZERO),</span><br><span class="line">    );</span><br><span class="line">    <span class="variable">$st</span> = <span class="number">8</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="variable">$siz</span> &gt; <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="variable">$by</span> = <span class="title function_ invoke__">ord</span>(<span class="variable">$file</span>[<span class="variable">$st</span>] );</span><br><span class="line">            <span class="variable">$st</span>++;</span><br><span class="line">        <span class="variable">$cmd</span> = <span class="variable">$by</span> &gt;&gt; <span class="number">5</span>;</span><br><span class="line">        <span class="variable">$len</span> = <span class="variable">$by</span> &amp; <span class="number">0x1f</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (<span class="variable">$cmd</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">6</span>: <span class="comment">// c0</span></span><br><span class="line">                <span class="variable">$b</span> = <span class="variable">$file</span>[<span class="variable">$st</span>];</span><br><span class="line">                    <span class="variable">$st</span>++;</span><br><span class="line">                <span class="variable">$e</span> = <span class="keyword">array</span>(<span class="variable">$cmd</span>, <span class="variable">$b</span>);</span><br><span class="line"></span><br><span class="line">                <span class="title function_ invoke__">update_dict</span>(<span class="variable">$dict</span>, <span class="variable">$cmd</span>, <span class="variable">$e</span>);</span><br><span class="line">                <span class="variable">$dec</span> .= <span class="title function_ invoke__">str_repeat</span>(<span class="variable">$b</span>, <span class="variable">$len</span> + <span class="number">2</span>);</span><br><span class="line">                <span class="variable">$siz</span> -= (<span class="variable">$len</span> + <span class="number">2</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="number">7</span>: <span class="comment">// e0</span></span><br><span class="line">                <span class="variable">$b</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$file</span>, <span class="variable">$st</span>, <span class="variable">$len</span> + <span class="number">1</span>);</span><br><span class="line">                    <span class="variable">$st</span> += (<span class="variable">$len</span> + <span class="number">1</span>);</span><br><span class="line">                <span class="variable">$e</span> = <span class="keyword">array</span>(<span class="variable">$cmd</span>, <span class="variable">$b</span>);</span><br><span class="line"></span><br><span class="line">                <span class="title function_ invoke__">update_dict</span>(<span class="variable">$dict</span>, <span class="variable">$cmd</span>, <span class="variable">$e</span>);</span><br><span class="line">                <span class="variable">$dec</span> .= <span class="variable">$b</span>;</span><br><span class="line">                <span class="variable">$siz</span> -= (<span class="variable">$len</span> + <span class="number">1</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="variable">$ref</span> = <span class="variable">$dict</span>[<span class="variable">$cmd</span>];</span><br><span class="line">                <span class="title function_ invoke__">update_dict</span>(<span class="variable">$dict</span>, <span class="variable">$cmd</span>, <span class="variable">$ref</span>);</span><br><span class="line">                <span class="keyword">switch</span> (<span class="variable">$ref</span>[<span class="number">0</span>] )</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">6</span>: <span class="comment">// c0</span></span><br><span class="line">                        <span class="variable">$dec</span> .= <span class="title function_ invoke__">str_repeat</span>(<span class="variable">$ref</span>[<span class="number">1</span>], <span class="variable">$len</span> + <span class="number">2</span>);</span><br><span class="line">                        <span class="variable">$siz</span> -= (<span class="variable">$len</span> + <span class="number">2</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">7</span>: <span class="comment">// e0</span></span><br><span class="line">                        <span class="variable">$dp</span> = <span class="variable">$len</span> &gt;&gt; <span class="number">2</span>;</span><br><span class="line">                        <span class="variable">$dl</span> = <span class="variable">$len</span> &amp;  <span class="number">3</span>;</span><br><span class="line">                        <span class="variable">$b</span> = <span class="title function_ invoke__">substr</span>(<span class="variable">$ref</span>[<span class="number">1</span>], <span class="variable">$dp</span>, <span class="variable">$dl</span> + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">                        <span class="variable">$dec</span> .= <span class="variable">$b</span>;</span><br><span class="line">                        <span class="variable">$siz</span> -= (<span class="variable">$dl</span> + <span class="number">1</span>);</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">default</span>:</span><br><span class="line">                        <span class="keyword">goto</span> done;</span><br><span class="line">                &#125; <span class="comment">// switch ($ref[0] )</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125; <span class="comment">// switch ($cmd)</span></span><br><span class="line">    &#125; <span class="comment">// while ($siz &gt; 0)</span></span><br><span class="line"></span><br><span class="line">done:</span><br><span class="line">    <span class="title function_ invoke__">trace</span>(<span class="string">&quot;== end sub_116048\n&quot;</span>);</span><br><span class="line">    <span class="variable">$file</span> = <span class="variable">$dec</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个老哥解释的比较抽象，实际上这是一个分块压缩算法，用一句话总结：解压缩时，对于每个 chunk 的第一个字节，低 5 位保存了长度，高 3 位保存了压缩方法，之后利用一个队列实现流式的 chunk 解压缩。</p>
+<p>用这个老哥提供的代码写了个对应的 Python 版本进行解压缩，前文中提到 <code>NORMAL</code> 中第 9 个和第 13 个文件都成功解压缩，并且解压出了部分 TIM2 图片和 BMP 图片，其中 BMP 图片很明显是一个码表。</p>
+<p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/3.bmp" alt="Not Found"></p>
+<p>不过很可惜，这老哥逆的也不完整，按照这老哥的解压算法，仍然有部分文件解出来仍然是一个未知格式的文件，但是根据前面提到的 第 13 个文件包含了 <code>NORMAL</code> 中的文件名，在第 10～12 这三个文件中理论上应该保存的也是明文，但是解压出来的却是乱码。</p>
+<p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/4.jpg" alt="Not Found"></p>
+<p>例如第 10 个文件 <code>SCENE_ID.LST</code> 解压出的效果如下，很明显不可能是文件名列表。</p>
+<p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/5.jpg" alt="Not Found"></p>
+<p>通过 review 老哥的算法可以发现，从始至终都没有使用过文件开头的第 5～8 个字节，也就是前文中所谓的”文件数量“，这 4 个字节如果没有任何作用的话也就不会被塞在文件开头并且占用 4 个字节的空间，对于寸土寸金的 PS2，4 个字节也是挺奢侈的。</p>
+<p>实际上通过观察解压缩失败与成功的文件，可以很容易得出结论：当第 5～8 个字节是 1 时，才会解压缩成功，否则解压缩出的就是乱码。至此我们推测，这个数字要么是表示压缩算法的种类，要么作为一个常量参与解压缩运算中，只不过当其取值为 1 时，这老哥的解压缩算法刚好正确。总之这老哥逆向逆一半，最后还得自己亲自逆，好在这老哥在代码中提供了解压缩函数的地址 <code>sub_116048</code>，自己动手，丰衣足食。</p>
+<h1 id="MIPS 逆向准备"><a href="#MIPS 逆向准备" class="headerlink" title="MIPS 逆向准备"></a>MIPS 逆向准备 </h1><p><a href="https://srpopty.github.io/2023/06/12/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%B8%89%EF%BC%89/"> 前文 </a> 中脚本语言分析完成后，还有存在很多没有定义的函数，那么剩下来的只有游戏主程序 <code>SLPS_258.97</code> 中可能存在这些函数的定义以及实现。好在 Ghidra 提供了 MIPS 反编译能力。虽然 PS2 的 CPU 5900l <code>Emotion Engine</code> 使用了 32 位的 MIPS-III，但是却是自定义的精简 MIPS 指令集，类似 microMIPS，在 MIPS16e 的基础上增删了一些指令。</p>
+<hr>
+<p><strong>Srpopty</strong>: Does the PlayStation2 use MIPS16e?</p>
+<p><strong>Bard</strong>: No, the PlayStation 2 does not use MIPS16e. It uses a custom RISC processor called the Emotion Engine (EE). The EE is based on the MIPS III architecture, but it includes a number of extensions that are not found in MIPS16e. For example, the EE has a floating-point unit, which is not present in MIPS16e. The EE also has a number of instructions that are specifically designed for multimedia applications.</p>
+<p>The PlayStation 2 was released in 2000, and at the time, MIPS16e was not a widely used architecture. MIPS16e was designed for embedded systems, and it was not considered to be powerful enough for high-end gaming consoles. The EE was a more powerful architecture that was better suited for the PlayStation 2’s target market.</p>
+<p>Here are some additional details about the Emotion Engine:</p>
+<p>The Emotion Engine is a 32-bit RISC processor.<br>The EE has a clock speed of 300 MHz.<br>The EE has a 2 MB L2 cache.<br>The EE has a floating-point unit.<br>The EE has a number of instructions that are specifically designed for multimedia applications.<br>The Emotion Engine was a powerful processor for its time, and it helped to make the PlayStation 2 one of the most successful gaming consoles of all time.</p>
+<hr>
+<p>因此直接用 Ghidra 内置的 MIPS 处理器无法完全识别所有指令，因此需要安装额外的 Ghidra 扩展 <a target="_blank" rel="noopener" href="https://github.com/beardypig/ghidra-emotionengine">ghidra-emotionengine</a> 或者 <a target="_blank" rel="noopener" href="https://github.com/chaoticgd/ghidra-emotionengine-reloaded">ghidra-emotionengine-reloaded</a>，根据 Ghidra 的版本安装不同的 Release，其中 ghidra-emotionengine 仅支持到 9.3，之后的 Ghidra 版本需要使用 ghidra-emotionengine-reloaded 提供的 Relase。</p>
+<p>下载好的 Ghidra 扩展是一个 zip 压缩包，将解压后的文件夹移动到 <code>~/.ghidra/.ghidra_xx.xx_PUBLIC/Extensions/</code> 目录下，之后在 GUI 的 Project 界面的 File 下就可以加载扩展</p>
+<p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/25.jpg" alt="Not Found"></p>
+<p>之后重启 Ghidra 后就可以用扩展提供的 r5900 处理器分析 <code>SLPS_258.97</code>，这时就可以正常解析指令。</p>
+<p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/26.jpg" alt="Not Found"></p>
+<h1 id="解压缩算法逆向"><a href="# 解压缩算法逆向" class="headerlink" title="解压缩算法逆向"></a>解压缩算法逆向 </h1><p> 逆向工作准备完成后，马不停蹄地来到前面老哥提供的解压缩函数 <code>0x116048</code> 处，结合 PCSX2 的 debuger 做了一些简单的分析：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">decompress</span><span class="params">(byte *data,byte *dst,<span class="type">int</span> param_3,ulong size)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">bool</span> bVar1;</span><br><span class="line">  <span class="type">int</span> *piVar2;</span><br><span class="line">  <span class="type">int</span> *piVar3;</span><br><span class="line">  <span class="type">int</span> *piVar4;</span><br><span class="line">  <span class="type">int</span> *piVar5;</span><br><span class="line">  <span class="type">int</span> *piVar6;</span><br><span class="line">  ulong uVar7;</span><br><span class="line">  ulong uVar8;</span><br><span class="line">  byte *pbVar9;</span><br><span class="line">  byte *ref_0;</span><br><span class="line">  byte *end;</span><br><span class="line">  uint command;</span><br><span class="line">  ulong length;</span><br><span class="line">  ulong pos;</span><br><span class="line">  byte instruction;</span><br><span class="line">  </span><br><span class="line">  uVar8 = (ulong)(<span class="type">int</span>)dst;</span><br><span class="line">  end = dst + (<span class="type">int</span>)size;</span><br><span class="line">  uVar7 = (ulong)(<span class="type">int</span>)(end + <span class="number">-1</span>);</span><br><span class="line">  <span class="keyword">if</span> (size == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  instruction = *data;</span><br><span class="line">  pos = uVar8;</span><br><span class="line">  <span class="keyword">do</span> &#123;</span><br><span class="line">    piVar3 = <span class="built_in">queue</span>[<span class="number">4</span>];</span><br><span class="line">    piVar6 = <span class="built_in">queue</span>[<span class="number">3</span>];</span><br><span class="line">    piVar4 = <span class="built_in">queue</span>[<span class="number">2</span>];</span><br><span class="line">                    <span class="comment">/* command == 6 */</span></span><br><span class="line">    pbVar9 = (byte *)pos;</span><br><span class="line">    <span class="keyword">if</span> ((instruction &amp; <span class="number">0xe0</span>) == <span class="number">0xc0</span>) &#123;</span><br><span class="line">      *<span class="built_in">queue</span>[<span class="number">5</span>] = *<span class="built_in">queue</span>[<span class="number">4</span>];</span><br><span class="line">      piVar5 = <span class="built_in">queue</span>[<span class="number">1</span>];</span><br><span class="line">      piVar2 = <span class="built_in">queue</span>[<span class="number">0</span>];</span><br><span class="line">      length = (<span class="type">long</span>)(<span class="type">int</span>)(pbVar9 + (instruction &amp; <span class="number">0x1f</span>) + <span class="number">2</span>);</span><br><span class="line">      <span class="keyword">if</span> (uVar7 &lt; (ulong)(<span class="type">long</span>)(<span class="type">int</span>)(pbVar9 + (instruction &amp; <span class="number">0x1f</span>) + <span class="number">2</span>)) &#123;</span><br><span class="line">        length = (<span class="type">long</span>)(<span class="type">int</span>)end;</span><br><span class="line">      &#125;</span><br><span class="line">      *piVar3 = *piVar6;</span><br><span class="line">      *piVar6 = *piVar4;</span><br><span class="line">      *piVar4 = *piVar5;</span><br><span class="line">      *piVar5 = *piVar2;</span><br><span class="line">      *piVar2 = (<span class="type">int</span>)data;</span><br><span class="line">      instruction = data[<span class="number">1</span>];</span><br><span class="line">      data = data + <span class="number">2</span>;</span><br><span class="line">      <span class="keyword">if</span> (pos &lt; length) &#123;</span><br><span class="line">        *pbVar9 = instruction;</span><br><span class="line">        <span class="keyword">while</span>(<span class="literal">true</span> ) &#123;</span><br><span class="line">          pbVar9 = (byte *)((<span class="type">int</span>)pos + <span class="number">1</span>);</span><br><span class="line">          pos = (ulong)(<span class="type">int</span>)pbVar9;</span><br><span class="line">          <span class="keyword">if</span> (length &lt;= pos) <span class="keyword">break</span>;</span><br><span class="line">          *pbVar9 = instruction;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">LAB_00116120:</span><br><span class="line">      length = pos - uVar8;</span><br><span class="line">      <span class="keyword">if</span> (uVar7 &lt; pos) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">/* command == 7 */</span></span><br><span class="line">      command = (uint)(instruction &gt;&gt; <span class="number">5</span>);</span><br><span class="line">      <span class="keyword">if</span> ((instruction &amp; <span class="number">0xe0</span>) == <span class="number">0xe0</span>) &#123;</span><br><span class="line">        *<span class="built_in">queue</span>[<span class="number">5</span>] = *<span class="built_in">queue</span>[<span class="number">4</span>];</span><br><span class="line">        piVar2 = <span class="built_in">queue</span>[<span class="number">2</span>];</span><br><span class="line">        piVar4 = <span class="built_in">queue</span>[<span class="number">1</span>];</span><br><span class="line">        length = (<span class="type">long</span>)(<span class="type">int</span>)(pbVar9 + (instruction &amp; <span class="number">0x1f</span>));</span><br><span class="line">        <span class="keyword">if</span> (uVar7 &lt; (ulong)(<span class="type">long</span>)(<span class="type">int</span>)(pbVar9 + (instruction &amp; <span class="number">0x1f</span>))) &#123;</span><br><span class="line">          length = uVar7;</span><br><span class="line">        &#125;</span><br><span class="line">        *piVar3 = *piVar6;</span><br><span class="line">        piVar3 = <span class="built_in">queue</span>[<span class="number">0</span>];</span><br><span class="line">        *piVar6 = *piVar2;</span><br><span class="line">        *piVar2 = *piVar4;</span><br><span class="line">        *piVar4 = *piVar3;</span><br><span class="line">        *piVar3 = (<span class="type">int</span>)data;</span><br><span class="line">        <span class="keyword">for</span> (; data = data + <span class="number">1</span>, pos &lt;= length; pos = (ulong)(<span class="type">int</span>)((byte *)pos + <span class="number">1</span>)) &#123;</span><br><span class="line">          *(byte *)pos = *data;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">goto</span> LAB_00116120;</span><br><span class="line">      &#125;</span><br><span class="line">      ref_0 = (byte *)(&amp;DAT_00261390)[command];</span><br><span class="line">      <span class="keyword">if</span> (<span class="number">4</span> &lt; command) &#123;</span><br><span class="line">        *<span class="built_in">queue</span>[<span class="number">5</span>] = *<span class="built_in">queue</span>[<span class="number">4</span>];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="number">3</span> &lt; command) &#123;</span><br><span class="line">        *<span class="built_in">queue</span>[<span class="number">4</span>] = *<span class="built_in">queue</span>[<span class="number">3</span>];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="number">2</span> &lt; command) &#123;</span><br><span class="line">        *<span class="built_in">queue</span>[<span class="number">3</span>] = *<span class="built_in">queue</span>[<span class="number">2</span>];</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="number">1</span> &lt; command) &#123;</span><br><span class="line">        *<span class="built_in">queue</span>[<span class="number">2</span>] = *<span class="built_in">queue</span>[<span class="number">1</span>];</span><br><span class="line">      &#125;</span><br><span class="line">      piVar4 = <span class="built_in">queue</span>[<span class="number">0</span>];</span><br><span class="line">      <span class="keyword">if</span> (command != <span class="number">0</span>) &#123;</span><br><span class="line">        *<span class="built_in">queue</span>[<span class="number">1</span>] = *<span class="built_in">queue</span>[<span class="number">0</span>];</span><br><span class="line">      &#125;</span><br><span class="line">      *piVar4 = (<span class="type">int</span>)ref_0;</span><br><span class="line">                    <span class="comment">/* dp == 6 */</span></span><br><span class="line">      <span class="keyword">if</span> ((*ref_0 &amp; <span class="number">0xe0</span>) == <span class="number">0xc0</span>) &#123;</span><br><span class="line">        length = (<span class="type">long</span>)(<span class="type">int</span>)(pbVar9 + (instruction &amp; <span class="number">0x1f</span>) + <span class="number">2</span>);</span><br><span class="line">        <span class="keyword">if</span> (uVar7 &lt; (ulong)(<span class="type">long</span>)(<span class="type">int</span>)(pbVar9 + (instruction &amp; <span class="number">0x1f</span>) + <span class="number">2</span>)) &#123;</span><br><span class="line">          length = (<span class="type">long</span>)(<span class="type">int</span>)end;</span><br><span class="line">        &#125;</span><br><span class="line">        instruction = ref_0[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span> (pos &lt; length) &#123;</span><br><span class="line">          *pbVar9 = instruction;</span><br><span class="line">          <span class="keyword">while</span>(<span class="literal">true</span> ) &#123;</span><br><span class="line">            pbVar9 = (byte *)((<span class="type">int</span>)pos + <span class="number">1</span>);</span><br><span class="line">            pos = (ulong)(<span class="type">int</span>)pbVar9;</span><br><span class="line">            <span class="keyword">if</span> (length &lt;= pos) <span class="keyword">break</span>;</span><br><span class="line">            *pbVar9 = instruction;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        bVar1 = uVar7 &lt; pos;</span><br><span class="line">LAB_001162d8:</span><br><span class="line">        <span class="keyword">if</span> (bVar1) &#123;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">/* dp == 7 */</span></span><br><span class="line">        <span class="keyword">if</span> ((*ref_0 &amp; <span class="number">0xe0</span>) == <span class="number">0xe0</span>) &#123;</span><br><span class="line">          ref_0 = ref_0 + <span class="number">1</span> + ((instruction &amp; <span class="number">0x1f</span>) &gt;&gt; <span class="number">2</span>);</span><br><span class="line">          length = (<span class="type">long</span>)(<span class="type">int</span>)(pbVar9 + (instruction &amp; <span class="number">3</span>));</span><br><span class="line">          <span class="keyword">if</span> (uVar7 &lt; (ulong)(<span class="type">long</span>)(<span class="type">int</span>)(pbVar9 + (instruction &amp; <span class="number">3</span>))) &#123;</span><br><span class="line">            length = (<span class="type">long</span>)(<span class="type">int</span>)end;</span><br><span class="line">          &#125;</span><br><span class="line">          bVar1 = uVar7 &lt; pos;</span><br><span class="line">          <span class="keyword">if</span> (pos &lt;= length) &#123;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">              *(byte *)pos = *ref_0;</span><br><span class="line">              pos = (ulong)(<span class="type">int</span>)((byte *)pos + <span class="number">1</span>);</span><br><span class="line">              ref_0 = ref_0 + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">while</span> (pos &lt;= length);</span><br><span class="line">            bVar1 = uVar7 &lt; pos;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">goto</span> LAB_001162d8;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      data = data + <span class="number">1</span>;</span><br><span class="line">      length = pos - uVar8;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (size &lt;= length) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    instruction = *data;</span><br><span class="line">  &#125; <span class="keyword">while</span>(<span class="literal">true</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>果然老哥没逆错，这个函数的内容和老哥逆出来的一样，从 <code>data</code> 中解压数据到 <code>dst</code> 中，<code>queue</code> 就是老哥的 <code>HISTORY</code>，表达式 <code>(xxx &amp; 0xe0) == 0xc0</code> 等价于 <code>xxx == 6</code>，<code>(xxx &amp; 0xe0) == 0xe0</code> 等价于 <code>xxx == 7</code>。</p>
+<p>发现这个函数中也没有使用前面提到的文件中第 5~8 个字节（为了表达方便，我们记为 <code>unknown</code>），只用了前 4 个字节 <code>size</code>，那么就回到这个函数的调用者，看看调用者在执行完这个函数后会不会对 <code>dst</code> 做其他处理。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">ulong <span class="title function_">decompress_chunk</span><span class="params">(byte *chunk,byte *result,<span class="type">long</span> param_3,<span class="type">long</span> param_4,<span class="type">long</span> param_5,</span></span><br><span class="line"><span class="params">                      undefined8 param_6)</span></span><br><span class="line">&#123;</span><br><span class="line">  byte *dst;</span><br><span class="line">  <span class="type">long</span> lVar1;</span><br><span class="line">  ulong uVar2;</span><br><span class="line">  <span class="type">long</span> unknown;</span><br><span class="line">  <span class="type">long</span> lVar4;</span><br><span class="line">  ulong decompressed_size;</span><br><span class="line">  <span class="type">int</span> decompressed_size_1;</span><br><span class="line">  <span class="type">int</span> *buf [<span class="number">4</span>];</span><br><span class="line">  <span class="type">long</span> lVar3;</span><br><span class="line">  byte c4;</span><br><span class="line">  byte c5;</span><br><span class="line">  byte c6;</span><br><span class="line">  byte c7;</span><br><span class="line">  </span><br><span class="line">  lVar1 = (<span class="type">long</span>)(<span class="type">int</span>)result;</span><br><span class="line">  reset();</span><br><span class="line">  decompressed_size_1 = (uint)*chunk + (uint)chunk[<span class="number">3</span>] * <span class="number">0x1000000</span>;</span><br><span class="line">  lVar3 = (<span class="type">long</span>)decompressed_size_1;</span><br><span class="line">  c7 = chunk[<span class="number">7</span>];</span><br><span class="line">  c6 = chunk[<span class="number">6</span>];</span><br><span class="line">  decompressed_size_1 = decompressed_size_1 + (uint)chunk[<span class="number">2</span>] * <span class="number">0x10000</span> + (uint)chunk[<span class="number">1</span>] * <span class="number">0x100</span>;</span><br><span class="line">  c5 = chunk[<span class="number">5</span>];</span><br><span class="line">  lVar4 = (<span class="type">long</span>)(<span class="type">int</span>)((uint)c7 * <span class="number">0x1000000</span>);</span><br><span class="line">  c4 = chunk[<span class="number">4</span>];</span><br><span class="line">  decompressed_size = (ulong)decompressed_size_1;</span><br><span class="line">  <span class="built_in">malloc</span>((<span class="type">int</span> *)buf,decompressed_size);</span><br><span class="line">                    <span class="comment">/* try &#123; // try from 00116474 to 0011647b has its CatchHandler @ 001164dc */</span></span><br><span class="line">  dst = (byte *)extend_size(buf,<span class="number">0</span>);</span><br><span class="line">  decompress(chunk + <span class="number">8</span>,dst,<span class="number">1</span>,(<span class="type">long</span>)decompressed_size_1);</span><br><span class="line">  unknown = (<span class="type">long</span>)(<span class="type">int</span>)((uint)c4 + (uint)c7 * <span class="number">0x1000000</span> + (uint)c6 * <span class="number">0x10000</span> + (uint)c5 * <span class="number">0x100</span>);</span><br><span class="line">  uVar2 = decompressed_size;</span><br><span class="line">  FUN_00116348(dst,result,decompressed_size_1,unknown);</span><br><span class="line">  free_buf((<span class="type">int</span> *)buf,lVar1,uVar2,unknown,param_5,param_6,lVar3,lVar4);</span><br><span class="line">  <span class="keyword">return</span> decompressed_size;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>chunk</code> 就是一个文件的内容，dst 是 <code>decompress</code> 解压的输出，可以看到第 33 行执行完 <code>decompress</code> 后，取出 <code>chunk</code> 的第 5～8 个字节小端转换为 int 作为 <code>unknown</code>，最终带着 <code>dst</code>、为压缩文件大小 <code>decompress_size</code> 和 <code>unknown</code> 调用了 <code>FUN_00116348</code> 函数，并且结果放在 <code>result</code> 中，作为 <code>decompress_chunk</code> 函数的返回结果。</p>
+<p>那么很明显，<code>FUN_00116348</code> 就是那个老哥没有逆干净的代码，进去看看这个函数用 <code>unknown</code> 干了啥。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">FUN_00116348</span><span class="params">(byte *buf,byte *result,<span class="type">int</span> size,<span class="type">long</span> unknown)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="type">int</span> k;</span><br><span class="line">  byte *pos;</span><br><span class="line">  <span class="type">int</span> j;</span><br><span class="line">  </span><br><span class="line">  j = size / (<span class="type">int</span>)unknown;</span><br><span class="line">  i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (unknown == <span class="number">0</span>) &#123;</span><br><span class="line">    trap(<span class="number">7</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  k = j * (<span class="type">int</span>)unknown;</span><br><span class="line">  <span class="keyword">if</span> (<span class="number">0</span> &lt; j) &#123;</span><br><span class="line">    pos = buf;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span> ) &#123;</span><br><span class="line">      <span class="keyword">for</span> (; pos &lt; buf + k; pos = pos + j) &#123;</span><br><span class="line">        *result = *pos;</span><br><span class="line">        result = result + <span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      i = i + <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">if</span> (j &lt;= i) <span class="keyword">break</span>;</span><br><span class="line">      pos = buf + i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (; k &lt; size; k = k + <span class="number">1</span>) &#123;</span><br><span class="line">    *result = buf[k];</span><br><span class="line">    result = result + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>果然，我们前面的推理没错，<code>unknown</code> 确实作为一个常量参与解压计算，<code>FUN_00116348</code> 会基于 <code>unknown</code> 对 <code>decompress</code> 的结果进行新一轮解压，当 <code>unknown</code> 取值为 1 时，这个函数原封不动的复制 <code>buf</code> 到 <code>result</code> 中，这就是为什么老哥逆出来的解压算法只能成功解压 <code>unknown</code> 为 1 的文件。</p>
+<p>最终，基于 <code>FUN_00116348</code> 的逆向结果，重新解压 <code>NORMAL</code> 的第 10 个文件 <code>SCENE_ID.LST</code>，这次解压出了正确的结果。</p>
+<p><img src="/2024/02/10/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E5%9B%9B%EF%BC%89/6.jpg" alt="Not Found"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ReverseEngineering/" rel="tag"># ReverseEngineering</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/12/%E6%9F%90%E4%B8%8A%E5%8F%A4PS2%E6%B8%B8%E6%88%8F%E9%80%86%E5%90%91%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="某上古 PS2 游戏逆向（三）游戏脚本初步分析与反编译">
+      <i class="fa fa-chevron-left"></i> 某上古 PS2 游戏逆向（三）游戏脚本初步分析与反编译
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">文件结构分析 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MIPS%20%E9%80%86%E5%90%91%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">MIPS 逆向准备 </span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95%E9%80%86%E5%90%91"><span class="nav-number">3.</span> <span class="nav-text">解压缩算法逆向 </span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Srpopty</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Srpopty" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Srpopty" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:srpopty@outlook.com" title="E-Mail → mailto:srpopty@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Srpopty</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fb9b672afa74e328fbe8',
+      clientSecret: '7b3efe103d7e694008b943a67e5273ad36ee14a0',
+      repo        : 'srpopty.github.io',
+      owner       : 'Srpopty',
+      admin       : ['Srpopty'],
+      id          : 'f016311e5c90793368e3c4971403145b',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
