@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/2023/02/27/DedeCMS-V5.7.160-Backend-SQLi-group/</loc>
+    <loc>https://srpopty.github.io/2023/02/27/DedeCMS-V5.7.160-Backend-SQLi-story/</loc>
     
     <lastmod>2023-02-26</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/2023/02/27/DedeCMS-V5.7.160-Backend-SQLi-story/</loc>
+    <loc>https://srpopty.github.io/2023/02/27/DedeCMS-V5.7.160-Backend-SQLi-group/</loc>
     
     <lastmod>2023-02-26</lastmod>
     
@@ -537,14 +537,14 @@
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/tags/SQLi/</loc>
+    <loc>https://srpopty.github.io/tags/XSS/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://srpopty.github.io/tags/XSS/</loc>
+    <loc>https://srpopty.github.io/tags/SQLi/</loc>
     <lastmod>2024-02-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
